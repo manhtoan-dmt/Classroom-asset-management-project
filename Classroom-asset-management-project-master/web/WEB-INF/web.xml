@@ -4,16 +4,8 @@
         <servlet-name>TestController</servlet-name>
         <servlet-class>controllers.TestController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>TestL2</servlet-name>
-        <servlet-class>controllers.TestL2</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
-        <url-pattern>/TestController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TestL2</servlet-name>
-        <url-pattern>/TestL2</url-pattern>
+        <url-pattern>/Test</url-pattern>
     </servlet-mapping>
 </web-app>
