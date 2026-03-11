@@ -4,8 +4,16 @@
         <servlet-name>TestController</servlet-name>
         <servlet-class>controllers.TestController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RoomController</servlet-name>
+        <servlet-class>controllers.RoomController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/Test</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomController</servlet-name>
+        <url-pattern>/Room</url-pattern>
     </servlet-mapping>
 </web-app>

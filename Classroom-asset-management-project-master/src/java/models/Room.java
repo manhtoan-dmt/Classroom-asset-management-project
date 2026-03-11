@@ -8,6 +8,7 @@ public class Room {
     private int buildingId;
     private int typeId;
     private int statusId;
+   
 
     public Room() {
     }
