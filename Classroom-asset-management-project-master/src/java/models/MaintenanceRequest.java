@@ -17,9 +17,9 @@ public class MaintenanceRequest {
     }
 
     public MaintenanceRequest(int requestId, int assetId, int reportedBy,
-                              Integer technicianId, String description,
-                              int statusId, LocalDateTime createdAt,
-                              LocalDateTime completedAt) {
+            Integer technicianId, String description,
+            int statusId, LocalDateTime createdAt,
+            LocalDateTime completedAt) {
 
         this.requestId = requestId;
         this.assetId = assetId;
@@ -31,35 +31,67 @@ public class MaintenanceRequest {
         this.completedAt = completedAt;
     }
 
-    public int getRequestId() { return requestId; }
+    public int getRequestId() {
+        return requestId;
+    }
 
-    public void setRequestId(int requestId) { this.requestId = requestId; }
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
 
-    public int getAssetId() { return assetId; }
+    public int getAssetId() {
+        return assetId;
+    }
 
-    public void setAssetId(int assetId) { this.assetId = assetId; }
+    public void setAssetId(int assetId) {
+        this.assetId = assetId;
+    }
 
-    public int getReportedBy() { return reportedBy; }
+    public int getReportedBy() {
+        return reportedBy;
+    }
 
-    public void setReportedBy(int reportedBy) { this.reportedBy = reportedBy; }
+    public void setReportedBy(int reportedBy) {
+        this.reportedBy = reportedBy;
+    }
 
-    public Integer getTechnicianId() { return technicianId; }
+    public Integer getTechnicianId() {
+        return technicianId;
+    }
 
-    public void setTechnicianId(Integer technicianId) { this.technicianId = technicianId; }
+    public void setTechnicianId(Integer technicianId) {
+        this.technicianId = technicianId;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public int getStatusId() { return statusId; }
+    public int getStatusId() {
+        return statusId;
+    }
 
-    public void setStatusId(int statusId) { this.statusId = statusId; }
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
-    public LocalDateTime getCompletedAt() { return completedAt; }
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
 
-    public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
 }
