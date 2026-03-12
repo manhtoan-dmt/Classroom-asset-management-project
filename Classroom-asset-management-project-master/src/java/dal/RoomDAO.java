@@ -74,4 +74,30 @@ public class RoomDAO extends DBContext {
         }
     }
 
+    public List<Room> getRoomsWithCode() {
+
+        List<Room> roomList = new ArrayList<>();
+
+        try {
+            String sql = "SELECT room_id, room_code FROM rooms";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                Room r = new Room();
+
+                r.setRoomId(rs.getInt("room_id"));
+                r.setRoomCode(rs.getString("room_code"));
+
+                roomList.add(r);
+            }
+            return roomList;
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
 }
