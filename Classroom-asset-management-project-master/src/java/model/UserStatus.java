@@ -1,13 +1,13 @@
-package models;
+package model;
 
-public class RoomStatus {
+public class UserStatus {
 
     private int statusId;
     private String statusName;
 
-    public RoomStatus() {}
+    public UserStatus() {}
 
-    public RoomStatus(int statusId, String statusName) {
+    public UserStatus(int statusId, String statusName) {
         this.statusId = statusId;
         this.statusName = statusName;
     }

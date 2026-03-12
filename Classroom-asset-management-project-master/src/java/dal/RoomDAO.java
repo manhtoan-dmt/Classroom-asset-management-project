@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
-import models.Room;
-import models.RoomWithName;
+import model.Room;
+import model.RoomWithName;
 
 public class RoomDAO extends DBContext {
 

@@ -56,12 +56,7 @@ public class TestController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        TestDAO dao=new TestDAO();
-        String connectionRes=dao.TestDBConnection();
-        out.print(connectionRes);
+        request.getRequestDispatcher("/views/tst.jsp").forward(request, response);
     }
 
     /**
