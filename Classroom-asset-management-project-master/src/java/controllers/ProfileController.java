@@ -8,7 +8,6 @@ package controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,8 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author THIN15
  */
-@WebServlet(name="tst", urlPatterns={"/tst"})
-public class tst extends HttpServlet {
+public class ProfileController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +33,10 @@ public class tst extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet tst</title>");  
+            out.println("<title>Servlet ProfileController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet tst at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
