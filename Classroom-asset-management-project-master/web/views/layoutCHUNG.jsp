@@ -1,4 +1,4 @@
-<body>
+<!--<body>
 
 <jsp:include page="header.jsp"/>
 
@@ -6,12 +6,12 @@
 
     <div class="row">
 
-        <!-- SIDEBAR -->
+         SIDEBAR 
         <div class="col-md-2 p-0">
             <jsp:include page="topnav.jsp"/>
         </div>
 
-        <!-- CONTENT -->
+         CONTENT 
         <div class="col-md-10 content">
 
             <h1>CODE HERE</h1>
@@ -26,9 +26,9 @@
 
 <jsp:include page="footer.jsp"/>
 
-</body>
+</body>-->
 
-<-<!-- ================================ -->
+<!-- ================================ -->
 <%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>

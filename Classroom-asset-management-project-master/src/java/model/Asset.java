@@ -9,7 +9,6 @@ public class Asset {
     private String assetName;
     private int categoryId;
     private Integer roomId;
-    private int quantity;
     private String serialNumber;
     private LocalDate purchaseDate;
     private int statusId;
@@ -17,14 +16,13 @@ public class Asset {
     public Asset() {}
 
     public Asset(int assetId, String assetCode, String assetName,
-                 int categoryId, Integer roomId, int quantity,
+                 int categoryId, Integer roomId,
                  String serialNumber, LocalDate purchaseDate, int statusId) {
         this.assetId = assetId;
         this.assetCode = assetCode;
         this.assetName = assetName;
         this.categoryId = categoryId;
         this.roomId = roomId;
-        this.quantity = quantity;
         this.serialNumber = serialNumber;
         this.purchaseDate = purchaseDate;
         this.statusId = statusId;
@@ -70,13 +68,6 @@ public class Asset {
         this.roomId = roomId;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public String getSerialNumber() {
         return serialNumber;
