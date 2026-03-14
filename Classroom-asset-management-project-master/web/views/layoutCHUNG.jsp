@@ -57,7 +57,7 @@
         </div>
 
         <!-- CONTENT -->
-        <div class="col-md-10 content">
+        <div class="col-md-10">
 
             <h1>CODE HERE</h1>
 
