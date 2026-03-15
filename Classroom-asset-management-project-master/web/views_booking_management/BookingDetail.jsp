@@ -1,16 +1,35 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@page import="java.util.List" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" />
         <title>Booking Detail</title>
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
     </head>
+    <body>
 
-    <body class="bg-light">
+<jsp:include page="/views/header.jsp"/>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-2 p-0">
+            <jsp:include page="/views/topnav.jsp"/>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-10">
+
+            <div class="bg-light">
 
         <!-- NAVBAR -->
         <nav class="navbar navbar-dark bg-warning">
@@ -38,20 +57,30 @@
                     <p>
                         <strong>Status:</strong>
 
-                    <c:choose>
-                        <c:when test="${b.status=='Pending'}">
-                            <span class="badge bg-secondary">Pending</span>
-                        </c:when>
 
-                        <c:when test="${b.status=='Approved'}">
-                            <span class="badge bg-success">Approved</span>
-                        </c:when>
+                        <c:choose>
 
-                        <c:when test="${b.status=='Cancelled'}">
-                            <span class="badge bg-danger">Cancelled</span>
-                        </c:when>
-                    </c:choose>
+                            <c:when test="${b.status=='Pending'}">
+                                <span class="badge bg-secondary">Pending</span>
+                            </c:when>
 
+                            <c:when test="${b.status=='Approved'}">
+                                <span class="badge bg-success">Approved</span>
+                            </c:when>
+
+                            <c:when test="${b.status=='Rejected'}">
+                                <span class="badge bg-dark">Rejected</span>
+                            </c:when>
+
+                            <c:when test="${b.status=='Cancelled'}">
+                                <span class="badge bg-danger">Cancelled</span>
+                            </c:when>
+
+                            <c:when test="${b.status=='Finished'}">
+                                <span class="badge bg-primary">Finished</span>
+                            </c:when>
+
+                        </c:choose>
                     </p>
 
 
@@ -75,7 +104,6 @@
                     <hr>
 
                     <p><strong>Created At:</strong> ${b.createdAt}</p>
-                    <p><strong>Date:</strong> ${b.date}</p>
 
 
                     <!-- PURPOSE -->
@@ -87,30 +115,39 @@
 
                     <!-- ACTION BUTTONS -->
 
-                    <div class="mt-4">
+                    <div class="mt-4 d-flex gap-2 flex-wrap">
 
-                        <a href="Booking?action=approve&id=${b.bookingId}"
-                           class="btn btn-success">
+                            <a href="Book?action=updateStatus&id=${b.bookingId}&status=1"
+                               class="btn btn-secondary">
+                                Pending
+                            </a>
 
-                            Approve
+                            <a href="Book?action=updateStatus&id=${b.bookingId}&status=2"
+                               class="btn btn-success">
+                                Approve
+                            </a>
 
-                        </a>
+                            <a href="Book?action=updateStatus&id=${b.bookingId}&status=3"
+                               class="btn btn-dark">
+                                Reject
+                            </a>
 
-                        <a href="Booking?action=cancel&id=${b.bookingId}"
-                           class="btn btn-danger">
+                            <a href="Book?action=updateStatus&id=${b.bookingId}&status=4"
+                               class="btn btn-danger">
+                                Cancel
+                            </a>
 
-                            Cancel
+                            <a href="Book?action=updateStatus&id=${b.bookingId}&status=5"
+                               class="btn btn-primary">
+                                Finish
+                            </a>
 
-                        </a>
+                            <a href="Book?action=manage"
+                               class="btn btn-outline-secondary">
+                                Back
+                            </a>
 
-                        <a href="Booking?action=manage"
-                           class="btn btn-secondary">
-
-                            Back
-
-                        </a>
-
-                    </div>
+                        </div>
 
                 </div>
 
@@ -118,6 +155,18 @@
 
         </div>
 
-    </body>
+    </div>
+        </div>
+
+    </div>
+
+</div>
+
+<jsp:include page="/views/footer.jsp"/>
+
+</body>
 </html>
+
+    
+
 

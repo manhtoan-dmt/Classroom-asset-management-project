@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import model.BookView;
+import model.BookingDetail;
 import model.BookingView;
 
 public class BookingDAO extends DBContext {
@@ -104,11 +105,11 @@ public class BookingDAO extends DBContext {
         }
     }
 
-    public void createBooking(int roomId, int userId, Timestamp start, Timestamp end) {
+    public void createBooking(int roomId, int userId, Timestamp start, Timestamp end, String purpose) {
 
         String sql = """
-                 INSERT INTO bookings(room_id,user_id,start_time,end_time,status_id)
-                 VALUES(?,?,?,?,1)
+                 INSERT INTO bookings(room_id,user_id,start_time,end_time,status_id,purpose)
+                 VALUES(?,?,?,?,1,?)
                  """;
 
         try {
@@ -119,6 +120,72 @@ public class BookingDAO extends DBContext {
             st.setInt(2, userId);
             st.setTimestamp(3, start);
             st.setTimestamp(4, end);
+            st.setString(5, purpose);
+            st.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public BookingDetail getBookingDetailById(int id) {
+
+        String sql = """
+        SELECT b.booking_id,
+               r.room_code,
+               u.full_name,
+               u.email,
+               bs.status_name,
+               b.start_time,
+               b.end_time,
+               b.created_at,
+               b.purpose
+        FROM bookings b
+        JOIN rooms r ON b.room_id = r.room_id
+        JOIN users u ON b.user_id = u.user_id
+        JOIN booking_status bs ON b.status_id = bs.status_id
+        WHERE b.booking_id = ?
+        """;
+
+        try {
+
+            st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+
+                BookingDetail b = new BookingDetail();
+
+                b.setBookingId(rs.getInt("booking_id"));
+                b.setRoomName(rs.getString("room_code"));
+                b.setUserName(rs.getString("full_name"));
+                b.setEmail(rs.getString("email"));
+                b.setStatus(rs.getString("status_name"));
+                b.setPurpose(rs.getString("purpose"));
+                b.setCreatedAt(rs.getTimestamp("created_at"));
+
+                return b;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateStatus(int id, int status) {
+
+        String sql = "UPDATE bookings SET status_id=? WHERE booking_id=?";
+
+        try {
+
+            st = connection.prepareStatement(sql);
+
+            st.setInt(1, status);
+            st.setInt(2, id);
 
             st.executeUpdate();
 

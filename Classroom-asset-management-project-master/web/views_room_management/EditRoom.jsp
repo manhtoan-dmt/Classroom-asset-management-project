@@ -62,7 +62,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Room Type</label>
 
-                                <select name="type" class="form-control">
+                                <select name="typeId" class="form-control">
 
                                     <c:forEach var="t" items="${types}">
 
@@ -98,7 +98,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
 
-                                <select name="status" class="form-control">
+                                <select name="statusId" class="form-control">
 
                                     <c:forEach var="s" items="${statuses}">
 
@@ -119,7 +119,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Location</label>
 
-                                <select name="location" class="form-control">
+                                <select name="buildingId" class="form-control">
 
                                     <c:forEach var="l" items="${locations}">
 

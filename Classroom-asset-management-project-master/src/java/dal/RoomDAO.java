@@ -450,29 +450,35 @@ public class RoomDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
-    public List<RoomType> getAllRoomType() {
 
-        List<RoomType> list = new ArrayList<>();
+    public List<Room> getAllRoomById(int id) {
+
+        List<Room> list = new ArrayList<>();
 
         String sql = """
-                     SELECT room_id, room_code
+                     SELECT room_id, room_code, capacity, building_id, type_id, status_id
                      FROM rooms
-                     WHERE status_id = 1
+                     WHERE status_id = ?
                      ORDER BY room_code
                      """;
 
         try {
 
+
             st = connection.prepareStatement(sql);
+            st.setInt(1, id);
             rs = st.executeQuery();
 
             while (rs.next()) {
 
-                RoomType r = new RoomType();
+                Room r = new Room();
 
-                r.setTypeId(rs.getInt("room_id"));
-                r.setTypeName(rs.getString("room_code"));
+                r.setRoomId(rs.getInt("room_id"));
+                r.setRoomCode(rs.getString("room_code"));
+                r.setCapacity(rs.getInt("capacity"));
+                r.setBuildingId(rs.getInt("building_id"));
+                r.setTypeId(rs.getInt("type_id"));
+                r.setStatusId(rs.getInt("status_id"));
 
                 list.add(r);
             }
@@ -484,4 +490,20 @@ public class RoomDAO extends DBContext {
         return list;
     }
 
+    public void deleteRoom(int id) {
+
+    String sql = "DELETE FROM rooms WHERE room_id=?";
+
+    try {
+
+        st = connection.prepareStatement(sql);
+
+        st.setInt(1, id);
+
+        st.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 }

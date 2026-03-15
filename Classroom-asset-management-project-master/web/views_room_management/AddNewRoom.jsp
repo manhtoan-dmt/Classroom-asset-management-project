@@ -52,6 +52,7 @@
                                         <div class="card-body">
 
                                             <form action="Room" method="post">
+                                                <input type="hidden" name="action" value="add">
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Room Code</label>

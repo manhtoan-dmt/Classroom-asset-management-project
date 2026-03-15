@@ -1,20 +1,26 @@
-<%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
+
     <head>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" />
+
         <title>Issue Detail</title>
+
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
+        <link rel="stylesheet"
+              href="${pageContext.request.contextPath}/static/css/style.css" />
+
     </head>
+
     <body>
 
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="/views/header.jsp"/>
 
         <div class="container-fluid">
 
@@ -22,104 +28,102 @@
 
                 <!-- SIDEBAR -->
                 <div class="col-md-2 p-0">
-                    <jsp:include page="topnav.jsp"/>
+                    <jsp:include page="/views/topnav.jsp"/>
                 </div>
 
                 <!-- CONTENT -->
                 <div class="col-md-10">
 
-                    <div class="bg-light">
+                    <nav class="navbar navbar-dark bg-warning">
+                        <div class="container-fluid">
+                            <span class="navbar-brand fw-bold">Issue Detail</span>
+                        </div>
+                    </nav>
 
-                        <nav class="navbar navbar-dark bg-warning">
-                            <div class="container-fluid">
-                                <span class="navbar-brand fw-bold">Issue Detail</span>
+                    <div class="container mt-4">
+
+                        <div class="card shadow">
+
+                            <div class="card-header bg-warning text-white">
+                                <h4>Issue Detail</h4>
                             </div>
-                        </nav>
 
-                        <div class="container mt-4">
+                            <div class="card-body">
 
-                            <div class="card shadow">
+                                <form action="Issue" method="post">
 
-                                <div class="card-header bg-warning text-white">
-                                    <h4>Issue Detail</h4>
-                                </div>
+                                    <input type="hidden" name="action" value="updateStatus">
+                                    <input type="hidden" name="issueId" value="${issue.issueId}">
 
-                                <div class="card-body">
+                                    <!-- ISSUE INFO -->
 
-                                    <form action="Issue" method="post">
+                                    <h5 class="text-warning">Issue Information</h5>
+                                    <hr>
 
-                                        <input type="hidden" name="action" value="updateStatus">
-                                        <input type="hidden" name="issueId" value="${issue.issueId}">
+                                    <p><b>Issue ID:</b> ${issue.issueId}</p>
 
+                                    <p><b>Room:</b> ${issue.roomCode}</p>
 
-                                        <h5 class="text-warning">Issue Information</h5>
-                                        <hr>
+                                    <p><b>Asset:</b> ${issue.assetName}</p>
 
-                                        <p><b>Issue ID:</b> ${issue.issueId}</p>
+                                    <p><b>Reported By:</b> ${issue.reportedBy}</p>
 
-                                        <p><b>Room:</b> ${issue.roomName}</p>
-
-                                        <p><b>Booking ID:</b> ${issue.bookingId}</p>
-
-                                        <p><b>Reported By:</b> ${issue.reportedBy}</p>
-
-                                        <p><b>Created At:</b> ${issue.createdAt}</p>
+                                    <p><b>Date:</b> ${issue.date}</p>
 
 
-                                        <h5 class="text-warning mt-3">Title</h5>
-                                        <hr>
+                                    <!-- DESCRIPTION -->
 
-                                        <p>${issue.title}</p>
+                                    <h5 class="text-warning mt-3">Description</h5>
+                                    <hr>
+
+                                    <p>${issue.description}</p>
+
+                                    <!-- STATUS -->
+
+                                    <h5 class="text-warning mt-3">Issue Status</h5>
+                                    <hr>
+
+                                    <select name="issueStatus" class="form-select w-25">
+
+                                        <option value="OPEN"
+                                                ${issue.issueStatus=='OPEN'?'selected':''}>
+                                            OPEN
+                                        </option>
+
+                                        <option value="IN_PROGRESS"
+                                                ${issue.issueStatus=='IN_PROGRESS'?'selected':''}>
+                                            IN PROGRESS
+                                        </option>
+
+                                        <option value="COMPLETED"
+                                                ${issue.issueStatus=='COMPLETED'?'selected':''}>
+                                            COMPLETED
+                                        </option>
+
+                                        <option value="CANCELLED"
+                                                ${issue.issueStatus=='CANCELLED'?'selected':''}>
+                                            CANCELLED
+                                        </option>
+
+                                    </select>
 
 
-                                        <h5 class="text-warning mt-3">Description</h5>
-                                        <hr>
+                                    <!-- BUTTON -->
 
-                                        <p>${issue.description}</p>
+                                    <div class="mt-4">
 
+                                        <button type="submit" class="btn btn-success">
+                                            Save
+                                        </button>
 
-                                        <h5 class="text-warning mt-3">Status</h5>
-                                        <hr>
+                                        <a href="Issue?action=list"
+                                           class="btn btn-secondary">
+                                            Back
+                                        </a>
 
-                                        <select name="status" class="form-select w-25">
+                                    </div>
 
-                                            <option ${issue.status=='Open'?'selected':''}>Open</option>
-                                            <option ${issue.status=='Checking'?'selected':''}>Checking</option>
-                                            <option ${issue.status=='In Progress'?'selected':''}>In Progress</option>
-                                            <option ${issue.status=='Resolved'?'selected':''}>Resolved</option>
-                                            <option ${issue.status=='Broken'?'selected':''}>Broken</option>
-
-                                        </select>
-
-
-                                        <div class="mt-3">
-
-                                            <label class="form-label"><b>Technician Name</b></label>
-
-                                            <input type="text"
-                                                   name="technician"
-                                                   class="form-control w-50"
-                                                   placeholder="Enter technician name">
-
-                                        </div>
-
-
-                                        <div class="mt-4">
-
-                                            <button class="btn btn-success">Save</button>
-
-                                            <a href="Issue?action=list"
-                                               class="btn btn-secondary">
-
-                                                Back
-
-                                            </a>
-
-                                        </div>
-
-                                    </form>
-
-                                </div>
+                                </form>
 
                             </div>
 
@@ -133,12 +137,9 @@
 
         </div>
 
-        <jsp:include page="footer.jsp"/>
+    </div>
 
-    </body>
+    <jsp:include page="/views/footer.jsp"/>
+
+</body>
 </html>
-
-
-
-
-

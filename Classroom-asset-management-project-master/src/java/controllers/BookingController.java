@@ -5,15 +5,18 @@
 package controllers;
 
 import dal.BookingDAO;
+import dal.RoomDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import model.BookView;
+import model.BookingDetail;
 
 /**
  *
@@ -67,18 +70,29 @@ public class BookingController extends HttpServlet {
 
         switch (action) {
             case "detail":
-                String id = request.getParameter("id");
+                int id = Integer.parseInt(request.getParameter("id"));
 
-                request.setAttribute("bookingId", id);
+                BookingDAO bookDAO = new BookingDAO();
+                BookingDetail b = bookDAO.getBookingDetailById(id);
 
-                request.getRequestDispatcher("views_booking/detail.jsp")
+                request.setAttribute("b", b);
+
+                request.getRequestDispatcher("views_booking_management/BookingDetail.jsp")
                         .forward(request, response);
                 break;
 
             case "create":
-                response.sendRedirect("views_booking_management/CreateNewBooking.jsp");
-                break;
+                RoomDAO roomDAO = new RoomDAO();
 
+                request.setAttribute("rooms", roomDAO.getAllRoomById(1));
+
+                request.getRequestDispatcher("views_booking_management/CreateNewBooking.jsp")
+                        .forward(request, response);
+
+                break;
+            case "updateStatus":
+                updateStatus(request, response);
+                break;
             default:
                 String date = request.getParameter("date");
 
@@ -99,27 +113,60 @@ public class BookingController extends HttpServlet {
         }
     }
 
+    private void updateStatus(HttpServletRequest request,
+        HttpServletResponse response) throws IOException {
 
-/**
- * Handles the HTTP <code>POST</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+    int id = Integer.parseInt(request.getParameter("id"));
+    int status = Integer.parseInt(request.getParameter("status"));
+
+    BookingDAO dao = new BookingDAO();
+    dao.updateStatus(id, status);
+
+    response.sendRedirect("Book?action=detail&id=" + id);
+}
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("create".equals(action)) {
+            int roomId = Integer.parseInt(request.getParameter("roomId"));
+            String date = request.getParameter("date");
+            String slot = request.getParameter("timeSlot");
+            String purpose = request.getParameter("purpose");
+
+            String[] parts = slot.split("-");
+// định dạng Timestamp yyyy-mm-dd hh:mm:ss
+            String start = date + " " + parts[0] + ":00:00";
+            String end = date + " " + parts[1] + ":00:00";
+
+            Timestamp startTime = Timestamp.valueOf(start);
+            Timestamp endTime = Timestamp.valueOf(end);
+
+            int userId = 5; // tạm thời (sau sẽ lấy từ session)
+            BookingDAO dao = new BookingDAO();
+
+            dao.createBooking(roomId, userId, startTime, endTime, purpose);
+
+            response.sendRedirect("Book");
+        }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

@@ -117,6 +117,13 @@ public class RoomController extends HttpServlet {
             request.setAttribute("locations", dao.getAllBuildings());
             request.getRequestDispatcher("views_room_management/AddNewRoom.jsp")
                     .forward(request, response);
+        } else if ("delete".equals(action)) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            dao.deleteRoom(id);
+
+            response.sendRedirect("Room");
         }
 
     }
@@ -174,7 +181,11 @@ public class RoomController extends HttpServlet {
 
                 request.setAttribute("error", "Room code already exists");
 
-                request.getRequestDispatcher("views_room_management/AddRoom.jsp")
+                request.setAttribute("types", roomDAO.getAllTypes());
+                request.setAttribute("statuses", roomDAO.getAllStatus());
+                request.setAttribute("locations", roomDAO.getAllBuildings());
+
+                request.getRequestDispatcher("views_room_management/AddNewRoom.jsp")
                         .forward(request, response);
 
                 return;

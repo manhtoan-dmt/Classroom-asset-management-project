@@ -40,6 +40,10 @@
         <servlet-name>BookingController</servlet-name>
         <servlet-class>controllers.BookingController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MaintenanceController</servlet-name>
+        <servlet-class>controllers.MaintenanceController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/Test</url-pattern>
@@ -71,5 +75,9 @@
     <servlet-mapping>
         <servlet-name>BookingController</servlet-name>
         <url-pattern>/Book</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MaintenanceController</servlet-name>
+        <url-pattern>/Maintenance</url-pattern>
     </servlet-mapping>
 </web-app>

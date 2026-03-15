@@ -35,7 +35,7 @@
 
                 <div class="card-body">
 
-                    <form action="Booking" method="post">
+                    <form action="Book" method="post">
 
                         <input type="hidden" name="action" value="create">
 
@@ -49,7 +49,7 @@
 
                                 <c:forEach var="r" items="${rooms}">
                                     <option value="${r.roomId}">
-                                        ${r.roomName}
+                                        ${r.roomCode}
                                     </option>
                                 </c:forEach>
 
@@ -114,7 +114,7 @@
                                 Create Booking
                             </button>
 
-                            <a href="Booking" class="btn btn-secondary">
+                            <a href="Book" class="btn btn-secondary">
                                 Cancel
                             </a>
 

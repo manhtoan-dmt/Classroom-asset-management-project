@@ -96,13 +96,13 @@
                                             <a href="Room?action=edit&id=${r.roomID}"
                                                class="btn btn-warning btn-sm">Edit</a>
                                             <!--check lại cái delete này ở sevlet vì người dùng có thể dalete qua đường -->
-                                            <c:if test="${sessionScope.role == 'ADMIN'}">
+                                            
                                                 <a href="Room?action=delete&id=${r.roomID}"
                                                    class="btn btn-danger btn-sm"
                                                    onclick="return confirm('Delete this room?')">
                                                     Delete
                                                 </a>
-                                            </c:if>
+                                            <c:if test="${sessionScope.role == 'ADMIN'}"></c:if>
 
 
                                         </td>

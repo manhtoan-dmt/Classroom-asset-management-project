@@ -73,7 +73,7 @@
 
                     <div class="col-md-3 d-flex align-items-end">
 
-                        <a href="Booking?action=create"
+                        <a href="Book?action=create"
                            class="btn btn-success w-100">
 
                             Create New Booking
@@ -141,7 +141,7 @@
 
                             <td>
 
-                                <a href="Booking?action=detail&id=${b.getBookingId()}"
+                                <a href="Book?action=detail&id=${b.getBookingId()}"
                                    class="btn btn-primary btn-sm">
 
                                     Detail

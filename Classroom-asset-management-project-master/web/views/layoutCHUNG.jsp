@@ -45,7 +45,7 @@
     </head>
     <body>
 
-<jsp:include page="header.jsp"/>
+<jsp:include page="/views/header.jsp"/>
 
 <div class="container-fluid">
 
@@ -53,7 +53,7 @@
 
         <!-- SIDEBAR -->
         <div class="col-md-2 p-0">
-            <jsp:include page="topnav.jsp"/>
+            <jsp:include page="/views/topnav.jsp"/>
         </div>
 
         <!-- CONTENT -->
@@ -69,7 +69,7 @@
 
 </div>
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="/views/footer.jsp"/>
 
 </body>
 </html>

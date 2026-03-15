@@ -4,7 +4,7 @@
     <a href="${pageContext.request.contextPath}/Room">Room Management</a>
     <a href="assets.jsp">Asset Management</a>
     <a href="${pageContext.request.contextPath}/Book">Manage Book</a>
-    <a href="assets.jsp">Issue Reports</a>
+    <a href="${pageContext.request.contextPath}/Issue">Issue Reports</a>
     
     <c:if test="${sessionScope.user.roleId == 1}">
         <a href="userManagement.jsp">User Management</a>
