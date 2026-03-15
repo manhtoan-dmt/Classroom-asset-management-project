@@ -1,25 +1,34 @@
-
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@page import="java.util.List" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-<%
-    String today = LocalDate.now().toString();
-%>
-
 <!DOCTYPE html>
 <html>
-
     <head>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" />
         <title>Manage Bookings</title>
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
     </head>
+    <body>
 
-    <body class="bg-light">
+<jsp:include page="/views/header.jsp"/>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-2 p-0">
+            <jsp:include page="/views/topnav.jsp"/>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-md-10">
+
+            <div class="bg-light">
 
         <!-- NAVBAR -->
         <nav class="navbar navbar-dark bg-warning">
@@ -36,7 +45,7 @@
 
             <!-- FILTER DATE -->
 
-            <form action="Booking" method="get" class="mb-3">
+            <form action="Book" method="get" class="mb-3">
 
                 <input type="hidden" name="action" value="manage">
 
@@ -49,8 +58,9 @@
                         <input type="date"
                                name="date"
                                class="form-control"
-                               value="<%= today %>">
+                               value="${today}">
 
+                        
                     </div>
 
                     <div class="col-md-2 d-flex align-items-end">
@@ -63,7 +73,7 @@
 
                     <div class="col-md-3 d-flex align-items-end">
 
-                        <a href="createBooking.jsp"
+                        <a href="Booking?action=create"
                            class="btn btn-success w-100">
 
                             Create New Booking
@@ -75,7 +85,6 @@
                 </div>
 
             </form>
-
 
 
             <!-- BOOKING TABLE -->
@@ -103,46 +112,43 @@
 
                         <tr>
 
-                            <td>${b.roomName}</td>
-                            <td>${b.userName}</td>
-                            <td>${b.date}</td>
-                            <td>${b.timeSlot}</td>
+                            <td>${b.getRoomName()}</td>
+                            <td>${b.getUserName()}</td>
+                            <td>${b.getDate()}</td>
+                            <td>${b.getTimeSlot()}</td>
 
                             <td>
 
                                 <c:choose>
 
-                                    <c:when test="${b.status=='Pending'}">
+                                    <c:when test="${b.getStatus()=='Pending'}">
                                         <span class="badge bg-secondary">Pending</span>
                                     </c:when>
 
-                                    <c:when test="${b.status=='Approved'}">
+                                    <c:when test="${b.getStatus()=='Approved'}">
                                         <span class="badge bg-success">Approved</span>
                                     </c:when>
 
-                                    <c:when test="${b.status=='Cancelled'}">
+                                    <c:when test="${b.getStatus()=='Cancelled'}">
                                         <span class="badge bg-danger">Cancelled</span>
                                     </c:when>
-
+                                    <c:otherwise>
+                                        <span class="badge bg-dark">Unknown</span>
+                                    </c:otherwise>
                                 </c:choose>
 
                             </td>
 
                             <td>
 
-                                <a href="Booking?action=detail&id=${b.bookingId}"
+                                <a href="Booking?action=detail&id=${b.getBookingId()}"
                                    class="btn btn-primary btn-sm">
 
                                     Detail
 
                                 </a>
 
-                                <a href="Booking?action=history&id=${b.bookingId}"
-                                   class="btn btn-secondary btn-sm">
 
-                                    History
-
-                                </a>
 
                             </td>
 
@@ -156,6 +162,22 @@
 
         </div>
 
-    </body>
+    </div>
 
+        </div>
+
+    </div>
+
+</div>
+
+<jsp:include page="/views/footer.jsp"/>
+
+</body>
 </html>
+
+
+
+
+
+    
+

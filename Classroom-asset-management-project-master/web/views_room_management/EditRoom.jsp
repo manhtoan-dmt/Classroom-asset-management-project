@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="/views/header.jsp"/>
 
         <div class="container-fluid">
 
@@ -22,7 +22,7 @@
 
                 <!-- SIDEBAR -->
                 <div class="col-md-2 p-0">
-                    <jsp:include page="topnav.jsp"/>
+                    <jsp:include page="/views/topnav.jsp"/>
                 </div>
 
                 <!-- CONTENT -->
@@ -35,7 +35,7 @@
                         <form action="Room" method="post">
 
                             <input type="hidden" name="action" value="update">
-                            <input type="hidden" name="id" value="${room.roomID}">
+                            <input type="hidden" name="id" value="${room.roomId}">
 
                             <!-- ROOM NAME -->
 
@@ -43,8 +43,8 @@
                                 <label class="form-label">Room Name</label>
 
                                 <input type="text"
-                                       name="name"
-                                       value="${room.name}"
+                                       name="roomCode"
+                                       value="${room.roomCode}"
                                        class="form-control"
                                        required>
 
@@ -66,8 +66,8 @@
 
                                     <c:forEach var="t" items="${types}">
 
-                                        <option value="${t.typeID}"
-                                                <c:if test="${t.typeID == room.typeID}">selected</c:if>>
+                                        <option value="${t.typeId}"
+                                                <c:if test="${t.typeId == room.typeId}">selected</c:if>>
                                             ${t.typeName}
                                         </option>
 
@@ -102,9 +102,9 @@
 
                                     <c:forEach var="s" items="${statuses}">
 
-                                        <option value="${s}"
-                                                <c:if test="${s == room.status}">selected</c:if>>
-                                            ${s}
+                                        <option value="${s.statusId}"
+                                                <c:if test="${s.statusId == room.statusId}">selected</c:if>>
+                                            ${s.statusName}
                                         </option>
 
                                     </c:forEach>
@@ -123,9 +123,9 @@
 
                                     <c:forEach var="l" items="${locations}">
 
-                                        <option value="${l.locationID}"
-                                                <c:if test="${l.locationID == room.locationID}">selected</c:if>>
-                                            ${l.locationName}
+                                        <option value="${l.buildingId }"
+                                                <c:if test="${l.buildingId  == room.buildingId}">selected</c:if>>
+                                            ${l.buildingName}
                                         </option>
 
                                     </c:forEach>
@@ -135,16 +135,7 @@
                             </div>
 
 
-                            <!-- DESCRIPTION -->
 
-                            <div class="mb-3">
-                                <label class="form-label">Description</label>
-
-                                <textarea name="description"
-                                          class="form-control"
-                                          rows="3">${room.description}</textarea>
-
-                            </div>
 
 
                             <button class="btn btn-primary">Update</button>
@@ -161,37 +152,7 @@
 
         </div>
 
-        <jsp:include page="footer.jsp"/>
+        <jsp:include page="/views/footer.jsp"/>
 
     </body>
 </html>
-==
-
-
-
-
-
-<!--controller-->
-<!--String name = request.getParameter("name");
-
-if(roomDAO.isRoomNameExist(name, id)){
-    request.setAttribute("errorName", "Room name already exists");
-    
-    request.getRequestDispatcher("views_admin/edit_room.jsp")
-           .forward(request, response);
-    return;
-}-->
-
-<!--DAO-->
-<!--public boolean isRoomNameExist(String name, String id){
-
-String sql = "SELECT * FROM Rooms WHERE name=? AND roomID<>?";
-
-PreparedStatement ps = connection.prepareStatement(sql);
-ps.setString(1, name);
-ps.setString(2, id);
-
-ResultSet rs = ps.executeQuery();
-
-return rs.next();
-}-->

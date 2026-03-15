@@ -15,112 +15,131 @@
     </head>
     <body>
 
-<jsp:include page="header.jsp"/>
+        <jsp:include page="/views/header.jsp"/>
 
-<div class="container-fluid">
+        <div class="container-fluid">
 
-    <div class="row">
+            <div class="row">
 
-        <!-- SIDEBAR -->
-        <div class="col-md-2 p-0">
-            <jsp:include page="topnav.jsp"/>
-        </div>
+                <!-- SIDEBAR -->
+                <div class="col-md-2 p-0">
+                    <jsp:include page="/views/topnav.jsp"/>
+                </div>
 
-        <!-- CONTENT -->
-        <div class="col-md-10 content">
+                <!-- CONTENT -->
+                <div class="col-md-10 content">
 
-            <div class="bg-light">
+                    <div class="bg-light">
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
-            <div class="container-fluid">
-                <span class="navbar-brand fw-bold">Classroom Management</span>
-            </div>
-        </nav>
+                        <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+                            <div class="container-fluid">
+                                <span class="navbar-brand fw-bold">Classroom Management</span>
+                            </div>
+                        </nav>
 
-        <div class="container mt-5">
+                        <div class="container mt-5">
 
-            <div class="row justify-content-center">
+                            <div class="row justify-content-center">
 
-                <div class="col-md-6">
+                                <div class="col-md-6">
 
-                    <div class="card shadow">
+                                    <div class="card shadow">
 
-                        <div class="card-header bg-warning text-white fw-bold">
-                            Add New Room
-                        </div>
+                                        <div class="card-header bg-warning text-white fw-bold">
+                                            Add New Room
+                                        </div>
 
-                        <div class="card-body">
+                                        <div class="card-body">
 
-                            <form action="addRoom" method="post">
+                                            <form action="Room" method="post">
 
-                                <div class="mb-3">
-                                    <label class="form-label">Room Code</label>
-                                    <input type="text" class="form-control" name="roomCode" placeholder="Example: A301" required>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Room Code</label>
+
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="roomCode"
+                                                           placeholder="Example: A301"
+                                                           required>
+
+                                                    <c:if test="${not empty error}">
+                                                        <div class="text-danger">
+                                                            ${error}
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Capacity</label>
+                                                    <input type="number" class="form-control" name="capacity" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Building</label>
+
+                                                    <select class="form-select" name="buildingId">
+
+                                                        <c:forEach var="b" items="${locations}">
+                                                            <option value="${b.buildingId}">
+                                                                ${b.buildingName}
+                                                            </option>
+                                                        </c:forEach>
+
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Room Type</label>
+
+                                                    <select class="form-select" name="typeId">
+
+                                                        <c:forEach var="t" items="${types}">
+                                                            <option value="${t.typeId}">
+                                                                ${t.typeName}
+                                                            </option>
+                                                        </c:forEach>
+
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status</label>
+
+                                                    <select class="form-select" name="statusId">
+
+                                                        <c:forEach var="s" items="${statuses}">
+                                                            <option value="${s.statusId}">
+                                                                ${s.statusName}
+                                                            </option>
+                                                        </c:forEach>
+
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="d-grid gap-2">
+
+                                                    <button type="submit" class="btn btn-warning text-white fw-bold">
+                                                        Add Room
+                                                    </button>
+
+                                                    <a href="Room" class="btn btn-secondary">
+                                                        Back
+                                                    </a>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Capacity</label>
-                                    <input type="number" class="form-control" name="capacity" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Building</label>
-
-                                    <select class="form-select" name="buildingId">
-
-                                        <c:forEach var="b" items="${buildings}">
-                                            <option value="${b.buildingId}">
-                                                ${b.buildingName}
-                                            </option>
-                                        </c:forEach>
-
-                                    </select>
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Room Type</label>
-
-                                    <select class="form-select" name="typeId">
-
-                                        <c:forEach var="t" items="${roomTypes}">
-                                            <option value="${t.typeId}">
-                                                ${t.typeName}
-                                            </option>
-                                        </c:forEach>
-
-                                    </select>
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Status</label>
-
-                                    <select class="form-select" name="statusId">
-
-                                        <c:forEach var="s" items="${statuses}">
-                                            <option value="${s.statusId}">
-                                                ${s.statusName}
-                                            </option>
-                                        </c:forEach>
-
-                                    </select>
-
-                                </div>
-
-                                <div class="d-grid gap-2">
-
-                                    <button type="submit" class="btn btn-warning text-white fw-bold">
-                                        Add Room
-                                    </button>
-
-                                    <a href="roomList" class="btn btn-secondary">
-                                        Back
-                                    </a>
-
-                                </div>
-
-                            </form>
+                            </div>
 
                         </div>
 
@@ -132,19 +151,11 @@
 
         </div>
 
-    </div>
+        <jsp:include page="/views/footer.jsp"/>
 
-        </div>
-
-    </div>
-
-</div>
-
-<jsp:include page="footer.jsp"/>
-
-</body>
+    </body>
 </html>
 
 
-    
+
 

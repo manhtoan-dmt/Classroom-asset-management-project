@@ -4,24 +4,22 @@
  */
 package controllers;
 
-import jakarta.servlet.RequestDispatcher;
+import dal.BookingDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
-import model.AssetSummary;
-import dal.AssetDAO;
-import dal.RoomDAO;
-import model.Room;
+import model.BookView;
 
 /**
  *
- * @author ADMIN
+ * @author THIN15
  */
-public class AssetsController extends HttpServlet {
+public class BookingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class AssetsController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AssetsController</title>");
+            out.println("<title>Servlet BookingController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AssetsController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BookingController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,48 +59,67 @@ public class AssetsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String roomId = request.getParameter("roomId");
-        AssetDAO assetsDao = new AssetDAO();
-        RoomDAO roomDao = new RoomDAO();
-        List<AssetSummary> assetSummarys;
-        if (roomId == null || roomId.isEmpty()) {
-            assetSummarys = assetsDao.getAllAssets();
-        } else {
-            request.setAttribute("roomId", roomId);
-            assetSummarys = assetsDao.getAssetSummarys(Integer.parseInt(roomId));
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            action = "manage";
         }
 
-        List<Room> rooms = roomDao.getRoomsWithCode();
+        switch (action) {
+            case "detail":
+                String id = request.getParameter("id");
 
-        RequestDispatcher rd
-                = request.getRequestDispatcher("views_roommanagement/assets.jsp");
-        request.setAttribute("assets", assetSummarys);
-        request.setAttribute("rooms", rooms);
-        rd.forward(request, response);
+                request.setAttribute("bookingId", id);
 
+                request.getRequestDispatcher("views_booking/detail.jsp")
+                        .forward(request, response);
+                break;
+
+            case "create":
+                response.sendRedirect("views_booking_management/CreateNewBooking.jsp");
+                break;
+
+            default:
+                String date = request.getParameter("date");
+
+                if (date == null || date.isEmpty()) {
+                    date = LocalDate.now().toString();
+                }
+                try {
+                    BookingDAO dao = new BookingDAO();
+                    List<BookView> list = dao.getBookingsByDate(date);
+                    request.setAttribute("bookings", list);
+                    request.setAttribute("today", date);
+                    request.getRequestDispatcher("views_booking_management/BookingManagement.jsp")
+                            .forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+
+/**
+ * Handles the HTTP <code>POST</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

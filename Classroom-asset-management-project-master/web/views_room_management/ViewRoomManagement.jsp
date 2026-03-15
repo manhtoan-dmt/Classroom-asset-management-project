@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="/views/header.jsp"/>
 
         <div class="container-fluid">
 
@@ -22,7 +22,7 @@
 
                 <!-- SIDEBAR -->
                 <div class="col-md-2 p-0">
-                    <jsp:include page="topnav.jsp"/>
+                    <jsp:include page="/views/topnav.jsp"/>
                 </div>
 
                 <!-- CONTENT -->
@@ -48,7 +48,7 @@
                                 <p><b>Capacity:</b> ${room.capacity} people</p>
                                 <p><b>Location:</b> ${room.building}</p>
                                 <p><b>Status:</b> ${room.status}</p>
-                                <p><b>Description:</b> ${room.description}</p>
+
 
                             </div>
 
@@ -79,21 +79,20 @@
 
                                     <tr>
 
-                                        <td>${a.assetID}</td>
+                                        <td>${a.assetId}</td>
                                         <td>${a.assetName}</td>
-                                        <td>${a.status}</td>
+                                        <td>${a.statusName}</td>
 
                                         <td>
 
-                                            <a href="Assets?action=view&id=${a.assetID}"
+                                            <a href="Assets?action=view&id=${a.assetId}"
                                                class="btn btn-primary btn-sm">View</a>
 
-                                            <c:if test="${a.status == 'Broken'}">
+                                            <c:if test="${a.statusName eq 'Broken'}">
 
-                                                <a href="Issue?action=repair&id=${a.assetID}"
+                                                <a href="Issue?action=repair&id=${a.assetId}"
                                                    class="btn btn-warning btn-sm">Repair</a>
-                                                Repair
-                                                </a>
+                                                
 
                                             </c:if>
 
@@ -156,7 +155,7 @@
 
         </div>
 
-        <jsp:include page="footer.jsp"/>
+        <jsp:include page="/views/footer.jsp"/>
 
     </body>
 </html>

@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="/views/header.jsp"/>
 
         <div class="container-fluid">
 
@@ -22,7 +22,7 @@
 
                 <!-- SIDEBAR -->
                 <div class="col-md-2 p-0">
-                    <jsp:include page="topnav.jsp"/>
+                    <jsp:include page="/views/topnav.jsp"/>
                 </div>
 
                 <!-- CONTENT -->
@@ -33,12 +33,12 @@
                         <h2>Home Dashboard</h2>
 
                         <!-- Filter Date -->
-                        <form action="Home" method="get" class="mb-4">
+                        <form action="${pageContext.request.contextPath}/Home" method="get" class="mb-4">
                             <div class="row">
 
                                 <div class="col-md-3">
                                     <label>Date</label>
-                                    <input type="date" name="bookingDate"
+                                    <input type="date" name="nDate"
                                            value="<%= java.time.LocalDate.now()%>" required>
                                 </div>
 
@@ -58,7 +58,7 @@
                                 <div class="card text-center bg-light">
                                     <div class="card-body">
                                         <h6>Total Rooms: </h6>
-                                        <h3>${totalRooms}</h3>
+                                        <h3>${sRoom.getAvailable() + sRoom.getMaintenance() + sRoom.getOccupied()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <div class="card text-center bg-success text-white">
                                     <div class="card-body">
                                         <h6>Available</h6>
-                                        <h3>${availableRooms}</h3>
+                                        <h3>${sRoom.getAvailable()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 <div class="card text-center bg-warning">
                                     <div class="card-body">
                                         <h6>Maintenance</h6>
-                                        <h3>${maintenanceRooms}</h3>
+                                        <h3>${sRoom.getMaintenance()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 <div class="card text-center bg-danger text-white">
                                     <div class="card-body">
                                         <h6>Occupied</h6>
-                                        <h3>${occupiedRooms}</h3>
+                                        <h3>${sRoom.getOccupied()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -97,11 +97,11 @@
                         <h4>ASSET STATISTICS</h4>
                         <div class="row mb-4">
 
-                            <div class="col-md-2">
+                            <div class="col-md-1.5">
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Total</h6>
-                                        <h4>${totalAssets}</h4>
+                                        <h4>${sAsset.getAvailable()+sAsset.getMaintenance()+sAsset.getBroken()+sAsset.getDisposed()+sAsset.getInUse()+sAsset.getLost()}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -110,16 +110,23 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Available</h6>
-                                        <h4>${availableAssets}</h4>
+                                        <h4>${sAsset.getAvailable()}</h4>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-md-2">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h6>Maintenance</h6>
+                                        <h4>${sAsset.getMaintenance()}</h4>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-2">
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Broken</h6>
-                                        <h4>${brokenAssets}</h4>
+                                        <h4>${sAsset.getBroken()}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +135,7 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Disposed</h6>
-                                        <h4>${disposedAssets}</h4>
+                                        <h4>${sAsset.getDisposed()}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +144,7 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>In Use</h6>
-                                        <h4>${inUseAssets}</h4>
+                                        <h4>${sAsset.getInUse()}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +153,7 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Lost</h6>
-                                        <h4>${lostAssets}</h4>
+                                        <h4>${sAsset.getLost()}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +169,7 @@
                                 <div class="card text-center bg-warning">
                                     <div class="card-body">
                                         <h6>Open</h6>
-                                        <h3>${openIssues}</h3>
+                                        <h3>${sIssue.getOpen()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +178,7 @@
                                 <div class="card text-center bg-info">
                                     <div class="card-body">
                                         <h6>In Progress</h6>
-                                        <h3>${progressIssues}</h3>
+                                        <h3>${sIssue.getInProgress()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +187,7 @@
                                 <div class="card text-center bg-success text-white">
                                     <div class="card-body">
                                         <h6>Completed</h6>
-                                        <h3>${completedIssues}</h3>
+                                        <h3>${sIssue.getCompleted()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +196,7 @@
                                 <div class="card text-center bg-secondary text-white">
                                     <div class="card-body">
                                         <h6>Cancelled</h6>
-                                        <h3>${cancelledIssues}</h3>
+                                        <h3>${sIssue.getCancelled()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -201,11 +208,13 @@
                         <h4>USER STATISTICS</h4>
                         <div class="row mb-4">
 
+
+
                             <div class="col-md-3">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <h6>Total Users</h6>
-                                        <h3>${totalUsers}</h3>
+                                        <h6>Students</h6>
+                                        <h3>${sUser.getStudent()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -213,8 +222,8 @@
                             <div class="col-md-3">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <h6>Students</h6>
-                                        <h3>${students}</h3>
+                                        <h6>Teachers</h6>
+                                        <h3>${sUser.getTeacher()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +232,7 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Room Managers</h6>
-                                        <h3>${roomManagers}</h3>
+                                        <h3>${sUser.getStaff()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +241,16 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <h6>Admins</h6>
-                                        <h3>${admins}</h3>
+                                        <h3>${sUser.getAdmin()}</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1.5">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h6>Total Users</h6>
+                                        <h3>${sUser.getStudent()+sUser.getTeacher()+sUser.getStaff()+sUser.getAdmin()}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +265,7 @@
 
         </div>
 
-        <jsp:include page="footer.jsp"/>
+        <jsp:include page="/views/footer.jsp"/>
 
     </body>
 </html>

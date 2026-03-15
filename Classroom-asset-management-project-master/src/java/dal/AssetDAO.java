@@ -9,8 +9,10 @@ import model.AssetSummary;
 import model.AssetCategory;
 import model.AssetStatus;
 import model.AssetStatusHistory;
+import model.AssetView;
+import model.StatisticAsset;
 
-public class AssetsDAO extends DBContext {
+public class AssetDAO extends DBContext {
 
     PreparedStatement st;
     ResultSet rs;
@@ -104,4 +106,65 @@ public class AssetsDAO extends DBContext {
         return list;
     }
 
+    public StatisticAsset getStatisticAsset() {
+        StatisticAsset sAsset = null;
+        try {
+            String sql = """
+                         SELECT
+                         SUM(CASE WHEN status_id = 1 THEN 1 ELSE 0 END) AS Available,
+                         SUM(CASE WHEN status_id = 2 THEN 1 ELSE 0 END) AS InUse,
+                         SUM(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS Broken,
+                         SUM(CASE WHEN status_id = 4 THEN 1 ELSE 0 END) AS Maintenance,
+                         SUM(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS Lost,
+                         SUM(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS Disposed
+                         FROM assets;
+                         """;
+            st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                sAsset = new StatisticAsset(rs.getInt("Available"), rs.getInt("Broken"), rs.getInt("Disposed"), rs.getInt("InUse"), rs.getInt("Lost"), rs.getInt("Maintenance"));
+            }
+            return sAsset;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<AssetView> getAssetsByRoom(int roomID) {
+
+        List<AssetView> list = new ArrayList<>();
+
+        try {
+
+            String sql = """
+                     SELECT a.asset_id,
+                            a.asset_name,
+                            s.status_name
+                     FROM assets a
+                     JOIN asset_status s ON a.status_id = s.status_id
+                     WHERE a.room_id = ?
+                     """;
+
+            st = connection.prepareStatement(sql);
+            st.setInt(1, roomID);
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                AssetView a = new AssetView(
+                        rs.getInt("asset_id"),
+                        rs.getString("asset_name"),
+                        rs.getString("status_name")
+                );
+
+                list.add(a);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }
