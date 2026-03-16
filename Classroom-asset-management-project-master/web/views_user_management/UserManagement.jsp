@@ -29,14 +29,15 @@
 
             <!-- SEARCH -->
 
-            <form action="User" method="get" class="mb-3">
-
+            <form action="UserManagement" method="get" class="mb-3">
+                
                 <div class="row">
 
                     <div class="col-md-4">
 
                         <input type="text"
                                name="keyword"
+                               value="${keyword}"
                                class="form-control"
                                placeholder="Search by name or email">
 
@@ -52,7 +53,7 @@
 
                     <div class="col-md-3">
 
-                        <a href="createUser.jsp"
+                        <a href="views_user_management/CreateNewUser.jsp"
                            class="btn btn-success w-100">
 
                             Create New Account
@@ -88,24 +89,24 @@
 
                 <tbody>
 
-                    <c:forEach var="u" items="${userList}">
+                    <c:forEach var="u" items="${lUser}">
 
                         <tr>
 
                             <td>${u.userId}</td>
                             <td>${u.fullName}</td>
                             <td>${u.email}</td>
-                            <td>${u.role}</td>
+                            <td>${u.roleId}</td>
 
                             <td>
 
                                 <c:choose>
 
-                                    <c:when test="${u.status=='Active'}">
+                                    <c:when test="${u.statusId==1}">
                                         <span class="badge bg-success">Active</span>
                                     </c:when>
 
-                                    <c:when test="${u.status=='Inactive'}">
+                                    <c:when test="${u.statusId==2}">
                                         <span class="badge bg-danger">Inactive</span>
                                     </c:when>
 
@@ -115,21 +116,21 @@
 
                             <td>
 
-                                <a href="User?action=view&id=${u.userId}"
+                                <a href="UserManagement?action=view&id=${u.userId}"
                                    class="btn btn-primary btn-sm">
 
                                     View
 
                                 </a>
 
-                                <a href="User?action=edit&id=${u.userId}"
+                                <a href="UserManagement?action=edit&id=${u.userId}"
                                    class="btn btn-warning btn-sm text-white">
 
                                     Edit
 
                                 </a>
 
-                                <a href="User?action=delete&id=${u.userId}"
+                                <a href="UserManagement?action=delete&id=${u.userId}"
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('Delete this user?')">
 

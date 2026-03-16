@@ -25,7 +25,8 @@ public class LoginController extends HttpServlet {
         User user = dao.login(username, password);
 
         if (user == null) {
-
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
             request.setAttribute("error", "Username hoặc Password sai!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
 
@@ -39,19 +40,19 @@ public class LoginController extends HttpServlet {
             switch (role) {
 
                 case 1:
-                    response.sendRedirect("admin-dashboard");
+                    response.sendRedirect("Home");
                     break;
 
                 case 2:
-                    response.sendRedirect("staff-dashboard");
+                    response.sendRedirect("Home");
                     break;
 
                 case 3:
-                    response.sendRedirect("teacher-dashboard");
+                    response.sendRedirect("Home");
                     break;
 
                 case 4:
-                    response.sendRedirect("student-dashboard");
+                    response.sendRedirect("Home");
                     break;
 
                 default:

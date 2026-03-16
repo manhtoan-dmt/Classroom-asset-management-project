@@ -14,11 +14,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import model.StatisticAsset;
 import model.StatisticIssue;
 import model.StatisticRoom;
 import model.StatisticUser;
+import model.User;
+import org.apache.catalina.Session;
 
 /**
  *
@@ -64,31 +67,37 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("account");
+        int role = user.getRoleId();
 
         //cua admin vơi room management
-        String da = request.getParameter("nDate");
-        if (da == null || da.isEmpty()) {
-            da = LocalDate.now().toString();
+        if (role == 1 || role == 2) {
+            String da = request.getParameter("nDate");
+            if (da == null || da.isEmpty()) {
+                da = LocalDate.now().toString();
+            }
+
+            StatisticRoom sRoom = new StatisticRoom();
+            RoomDAO romDAO = new RoomDAO();
+            sRoom = romDAO.getStatisticRoom();
+            request.setAttribute("sRoom", sRoom);
+
+            AssetDAO assetDAO = new AssetDAO();
+            StatisticAsset sAsset = assetDAO.getStatisticAsset();
+            request.setAttribute("sAsset", sAsset);
+
+            IssueDAO isDAO = new IssueDAO();
+            StatisticIssue sIssue = isDAO.getStatisticIssue(da);
+            request.setAttribute("sIssue", sIssue);
+
+            UserDAO userDAO = new UserDAO();
+            StatisticUser sUser = userDAO.getStatisticUser();
+            request.setAttribute("sUser", sUser);
+
+            request.getRequestDispatcher("/views_home/Home.jsp").forward(request, response);
         }
 
-        StatisticRoom sRoom = new StatisticRoom();
-        RoomDAO romDAO = new RoomDAO();
-        sRoom = romDAO.getStatisticRoom();
-        request.setAttribute("sRoom", sRoom);
-
-        AssetDAO assetDAO = new AssetDAO();
-        StatisticAsset sAsset = assetDAO.getStatisticAsset();
-        request.setAttribute("sAsset", sAsset);
-
-        IssueDAO isDAO = new IssueDAO();
-        StatisticIssue sIssue = isDAO.getStatisticIssue(da);
-        request.setAttribute("sIssue", sIssue);
-
-        UserDAO userDAO = new UserDAO();
-        StatisticUser sUser = userDAO.getStatisticUser();
-        request.setAttribute("sUser", sUser);
-
-        request.getRequestDispatcher("/views_home/Home.jsp").forward(request, response);
     }
 
     /**

@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,6 +20,7 @@ import model.BookingView;
 import model.Room;
 import model.RoomView;
 import model.RoomWithName;
+import model.User;
 
 /**
  *
@@ -118,12 +120,17 @@ public class RoomController extends HttpServlet {
             request.getRequestDispatcher("views_room_management/AddNewRoom.jsp")
                     .forward(request, response);
         } else if ("delete".equals(action)) {
-
-            int id = Integer.parseInt(request.getParameter("id"));
-
-            dao.deleteRoom(id);
-
-            response.sendRedirect("Room");
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("account");
+            int role = user.getRoleId();
+            //cua admin
+            if (role == 1) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                dao.deleteRoom(id);
+                response.sendRedirect("Room");
+            } else {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
         }
 
     }

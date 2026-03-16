@@ -25,12 +25,12 @@
 
                 <div class="mb-3">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="${username}" class="form-control" required>
+                    <input type="text" id="username" name="username" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" value="${password}" class="form-control" required>
+                    <input type="password" id="password" name="password" class="form-control" required>
                 </div>
 
                 <button type="submit" class="btn btn-login w-100">
