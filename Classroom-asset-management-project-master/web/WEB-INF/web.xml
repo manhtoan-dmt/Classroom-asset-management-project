@@ -52,6 +52,10 @@
         <servlet-name>UserManagementController</servlet-name>
         <servlet-class>controllers.UserManagementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controllers.LogoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/Test</url-pattern>
@@ -95,5 +99,9 @@
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
         <url-pattern>/UserManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>

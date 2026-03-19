@@ -12,6 +12,6 @@
     </c:if>
     
     <a href="users.jsp">Profile</a>
-    <a href="users.jsp">Logout</a>
+    <a href="logout">Logout</a>
 
 </div>
