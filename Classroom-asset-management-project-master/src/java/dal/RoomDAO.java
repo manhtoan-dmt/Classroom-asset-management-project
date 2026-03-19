@@ -10,12 +10,13 @@ import java.sql.ResultSet;
 import java.util.List;
 import model.Building;
 import model.Room;
+import model.RoomStatistics;
 import model.RoomStatus;
 import model.RoomType;
 import model.RoomView;
 import model.RoomWithName;
 import model.StatisticRoom;
-
+import java.sql.Statement;
 public class RoomDAO extends DBContext {
 
     PreparedStatement st;
@@ -506,4 +507,43 @@ public class RoomDAO extends DBContext {
         e.printStackTrace();
     }
 }
+   public StatisticRoom getStatistic() {
+
+        StatisticRoom stat = new StatisticRoom();
+
+        try {
+
+            Statement st = connection.createStatement();
+
+            ResultSet rs1 = st.executeQuery("SELECT COUNT(*) FROM rooms WHERE status_id = 1");
+            if (rs1.next()) stat.setAvailable(rs1.getInt(1));
+
+            ResultSet rs2 = st.executeQuery("SELECT COUNT(*) FROM rooms WHERE status_id = 2");
+            if (rs2.next()) stat.setOccupied(rs2.getInt(1));
+
+            ResultSet rs3 = st.executeQuery("SELECT COUNT(*) FROM rooms WHERE status_id = 3");
+            if (rs3.next()) stat.setMaintenance(rs3.getInt(1));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return stat;
+    }
+
+    public int countTotalRooms() {
+        try {
+            String sql = "SELECT COUNT(*) FROM rooms";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Room> search(String building, String capacity, String status) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

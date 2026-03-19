@@ -52,6 +52,22 @@
         <servlet-name>UserManagementController</servlet-name>
         <servlet-class>controllers.UserManagementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RoomuserController</servlet-name>
+        <servlet-class>controllers.RoomuserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyBookingsController</servlet-name>
+        <servlet-class>controllers.MyBookingsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookingsUserController</servlet-name>
+        <servlet-class>controllers.BookingsUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupportServlet</servlet-name>
+        <servlet-class>controllers.SupportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/Test</url-pattern>
@@ -95,5 +111,21 @@
     <servlet-mapping>
         <servlet-name>UserManagementController</servlet-name>
         <url-pattern>/UserManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomuserController</servlet-name>
+        <url-pattern>/roomuser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyBookingsController</servlet-name>
+        <url-pattern>/mybooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingsUserController</servlet-name>
+        <url-pattern>/book</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SupportServlet</servlet-name>
+        <url-pattern>/support</url-pattern>
     </servlet-mapping>
 </web-app>

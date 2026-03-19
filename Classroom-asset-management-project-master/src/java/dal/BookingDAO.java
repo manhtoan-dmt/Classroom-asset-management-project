@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import model.BookView;
 import model.BookingDetail;
+import model.BookingInfo;
 import model.BookingView;
 
 public class BookingDAO extends DBContext {
@@ -127,6 +128,34 @@ public class BookingDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    public boolean isRoomBookedApproved(int roomId, Timestamp start, Timestamp end) {
+
+    String sql = """
+        SELECT COUNT(*) 
+        FROM bookings
+        WHERE room_id = ?
+        AND status_id = 2  -- ONLY Approved
+        AND (? < end_time AND ? > start_time)
+    """;
+
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, roomId);
+        ps.setTimestamp(2, start);
+        ps.setTimestamp(3, end);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return false;
+}
 
     public BookingDetail getBookingDetailById(int id) {
 
@@ -193,4 +222,154 @@ public class BookingDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    public List<BookingInfo> getBookingsByUser(int userId) {
+
+        List<BookingInfo> list = new ArrayList<>();
+
+        String sql = """
+            SELECT r.room_code,
+                   FORMAT(b.start_time,'dd/MM/yyyy') as booking_date,
+                   FORMAT(b.start_time,'HH:mm') + ' - ' + FORMAT(b.end_time,'HH:mm') as booking_time,
+                   bs.status_name
+            FROM bookings b
+            JOIN rooms r ON b.room_id = r.room_id
+            JOIN booking_status bs ON b.status_id = bs.status_id
+            WHERE b.user_id = ?
+        """;
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new BookingInfo(
+                        rs.getString("room_code"),
+                        rs.getString("booking_date"),
+                        rs.getString("booking_time"),
+                        rs.getString("status_name")
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public List<BookView> getBookingByUser(int userId) {
+    List<BookView> list = new ArrayList<>();
+
+    String sql = """
+        SELECT b.booking_id,
+               r.room_code,
+               CONVERT(date, b.start_time) as booking_date,
+               FORMAT(b.start_time, 'HH') + '-' + FORMAT(b.end_time, 'HH') as time_slot,
+               s.status_name
+        FROM bookings b
+        JOIN rooms r ON b.room_id = r.room_id
+        JOIN booking_status s ON b.status_id = s.status_id
+        WHERE b.user_id = ?
+        ORDER BY b.start_time DESC
+    """;
+
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            BookView b = new BookView();
+
+            b.setBookingId(rs.getInt("booking_id"));
+            b.setRoomName(rs.getString("room_code"));
+            b.setDate(rs.getString("booking_date"));
+            b.setTimeSlot(rs.getString("time_slot"));
+            b.setStatus(rs.getString("status_name"));
+
+            list.add(b);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
+
+    public void cancelBooking(int bookingId, int userId) {
+
+    String updateSql = "UPDATE bookings SET status_id = 4 WHERE booking_id = ?";
+    String historySql = """
+        INSERT INTO booking_history(booking_id, status, changed_by)
+        VALUES (?, 'Cancelled', ?)
+    """;
+
+    try {
+        connection.setAutoCommit(false);
+
+        // UPDATE booking
+        PreparedStatement ps1 = connection.prepareStatement(updateSql);
+        ps1.setInt(1, bookingId);
+        ps1.executeUpdate();
+
+        // INSERT history
+        PreparedStatement ps2 = connection.prepareStatement(historySql);
+        ps2.setInt(1, bookingId);
+        ps2.setInt(2, userId);
+        ps2.executeUpdate();
+
+        connection.commit();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        try {
+            connection.rollback();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    }
+    public void rejectOtherBookings(int roomId, Timestamp start, Timestamp end, int approvedId) {
+
+    String sql = """
+        UPDATE bookings
+        SET status_id = 3 -- Rejected
+        WHERE room_id = ?
+        AND booking_id != ?
+        AND status_id = 1 -- chỉ Pending
+        AND (? < end_time AND ? > start_time)
+    """;
+
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, roomId);
+        ps.setInt(2, approvedId);
+        ps.setTimestamp(3, start);
+        ps.setTimestamp(4, end);
+        ps.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    public void approveBooking(int bookingId, int roomId, Timestamp start, Timestamp end) {
+
+    // 1. set approved
+    String sql1 = "UPDATE bookings SET status_id = 2 WHERE booking_id = ?";
+
+    // 2. reject các booking khác
+    try {
+        PreparedStatement ps1 = connection.prepareStatement(sql1);
+        ps1.setInt(1, bookingId);
+        ps1.executeUpdate();
+
+        // 🔥 gọi hàm reject
+        rejectOtherBookings(roomId, start, end, bookingId);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 }

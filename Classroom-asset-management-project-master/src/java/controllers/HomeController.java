@@ -5,6 +5,7 @@
 package controllers;
 
 import dal.AssetDAO;
+import dal.BookingDAO;
 import dal.IssueDAO;
 import dal.RoomDAO;
 import dal.UserDAO;
@@ -16,6 +17,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.List;
+import model.BookView;
+import model.BookingInfo;
 import model.StatisticAsset;
 import model.StatisticIssue;
 import model.StatisticRoom;
@@ -69,6 +73,10 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
+        if (user == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         int role = user.getRoleId();
 
         //cua admin vơi room management
@@ -97,7 +105,23 @@ public class HomeController extends HttpServlet {
 
             request.getRequestDispatcher("/views_home/Home.jsp").forward(request, response);
         }
+        if (role == 3 || role == 4) {
+            BookingDAO bookingDAO = new BookingDAO();
+            RoomDAO roomDAO = new RoomDAO();
+            List<BookView> list = bookingDAO.getBookingByUser(user.getUserId());
+            request.setAttribute("booking", list);
+            
+//            List<BookingInfo> bookings = bookingDAO.getBookingsByUser(user.getUserId());
+            StatisticRoom stats = roomDAO.getStatistic();
 
+//            request.setAttribute("bookings", bookings);
+            request.setAttribute("stats", stats);
+            request.setAttribute("totalRooms", roomDAO.countTotalRooms());
+            request.setAttribute("reservedRooms", stats.getOccupied());
+
+            request.getRequestDispatcher("/views_student_teacher/home.jsp").forward(request, response);
+        }
+        
     }
 
     /**

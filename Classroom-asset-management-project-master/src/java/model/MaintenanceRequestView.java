@@ -1,8 +1,8 @@
 package model;
 
 public class MaintenanceRequestView {
-
-private int requestId;
+    private int roomId;
+    private int requestId;
     private String assetName;
     private String roomName;
     private String reportedBy;
