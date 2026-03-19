@@ -53,6 +53,7 @@
         <servlet-class>controllers.UserManagementController</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>RoomuserController</servlet-name>
         <servlet-class>controllers.RoomuserController</servlet-class>
     </servlet>
@@ -67,6 +68,10 @@
     <servlet>
         <servlet-name>SupportServlet</servlet-name>
         <servlet-class>controllers.SupportServlet</servlet-class>
+=======
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controllers.LogoutController</servlet-class>
+>>>>>>> 1f54b3080aecaa4ec3bf040d382bf31e4e53889f
     </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
@@ -113,6 +118,7 @@
         <url-pattern>/UserManagement</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>RoomuserController</servlet-name>
         <url-pattern>/roomuser</url-pattern>
     </servlet-mapping>
@@ -127,5 +133,9 @@
     <servlet-mapping>
         <servlet-name>SupportServlet</servlet-name>
         <url-pattern>/support</url-pattern>
+=======
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+>>>>>>> 1f54b3080aecaa4ec3bf040d382bf31e4e53889f
     </servlet-mapping>
 </web-app>
