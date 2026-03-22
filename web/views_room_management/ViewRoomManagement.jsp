@@ -84,8 +84,7 @@
                                         <td>${a.statusName}</td>
 
                                         <td>
-
-                                            <a href="Assets?action=view&id=${a.assetId}"
+                                            <a href="Assets?action=detail&assetId=${a.assetId}"
                                                class="btn btn-primary btn-sm">View</a>
 
                                             <c:if test="${a.statusName eq 'Broken'}">
