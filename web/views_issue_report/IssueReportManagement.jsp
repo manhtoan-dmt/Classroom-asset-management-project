@@ -46,7 +46,6 @@
             <div class="card shadow-sm p-3 mb-4">
 
                 <form action="Issue" method="get">
-
                     <input type="hidden" name="action" value="filter">
 
                     <div class="row">
@@ -137,7 +136,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Room</th>
-                                <th>Asset</th>
+                                <th>Asset Name</th>
+                                <th>Asset Id</th>
                                 <th>Reported By</th>
                                 <th>Status</th>
                                 <th>Date</th>
@@ -165,6 +165,7 @@
                                     <td>${i.roomCode}</td>
 
                                     <td>${i.assetName}</td>
+                                    <td>${i.assetId}</td>
 
                                     <td>${i.reportedBy}</td>
 

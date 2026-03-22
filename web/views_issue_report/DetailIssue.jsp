@@ -64,7 +64,8 @@
 
                                     <p><b>Room:</b> ${issue.roomCode}</p>
 
-                                    <p><b>Asset:</b> ${issue.assetName}</p>
+                                    <p><b>Asset Name:</b> ${issue.assetName}</p>
+                                    <p><b>Asset Id:</b> ${issue.assetId}</p>
 
                                     <p><b>Reported By:</b> ${issue.reportedBy}</p>
 

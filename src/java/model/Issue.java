@@ -19,6 +19,7 @@ public class Issue {
     private String description;
     private String technician;
     private String issueStatus;
+    private Integer assetId;
 
     public Issue() {
     }
@@ -34,6 +35,29 @@ public class Issue {
         this.technician = technician;
         this.issueStatus = issueStatus;
     }
+
+    public Issue(int issueId, String roomCode, String assetName, String reportedBy, String status, String date, String description, String technician, String issueStatus, Integer assIdet) {
+        this.issueId = issueId;
+        this.roomCode = roomCode;
+        this.assetName = assetName;
+        this.reportedBy = reportedBy;
+        this.status = status;
+        this.date = date;
+        this.description = description;
+        this.technician = technician;
+        this.issueStatus = issueStatus;
+        this.assetId = assIdet;
+    }
+
+    public Integer getAssetId() {
+        return assetId;
+    }
+
+    public void setAssetId(Integer assetId) {
+        this.assetId = assetId;
+    }
+    
+    
 
     public int getIssueId() {
         return issueId;
@@ -106,6 +130,5 @@ public class Issue {
     public void setIssueStatus(String issueStatus) {
         this.issueStatus = issueStatus;
     }
-    
-    
+
 }

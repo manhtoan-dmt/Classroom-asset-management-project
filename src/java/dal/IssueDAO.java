@@ -47,20 +47,21 @@ public class IssueDAO extends DBContext {
 
         String sql = """
         SELECT
-        mr.request_id,
-        ms.status_name,
-        r.room_code,
-        a.asset_name,
-        u.full_name,
-        s.status_name AS asset_status,
-        mr.created_at
-        FROM maintenance_requests mr
-        JOIN maintenance_status ms ON mr.status_id = ms.status_id
-        JOIN assets a ON mr.asset_id = a.asset_id
-        JOIN rooms r ON a.room_id = r.room_id
-        JOIN users u ON mr.reported_by = u.user_id
-        JOIN asset_status s ON a.status_id = s.status_id
-        ORDER BY mr.request_id DESC
+                mr.request_id,
+                ms.status_name,
+                r.room_code,
+                a.asset_name,
+        	a.asset_id,
+                u.full_name,
+                s.status_name AS asset_status,
+                mr.created_at
+                FROM maintenance_requests mr
+                JOIN maintenance_status ms ON mr.status_id = ms.status_id
+                JOIN assets a ON mr.asset_id = a.asset_id
+                JOIN rooms r ON a.room_id = r.room_id
+                JOIN users u ON mr.reported_by = u.user_id
+                JOIN asset_status s ON a.status_id = s.status_id
+                ORDER BY mr.request_id DESC
         """;
 
         try {
@@ -79,7 +80,7 @@ public class IssueDAO extends DBContext {
                 i.setReportedBy(rs.getString("full_name"));
                 i.setStatus(rs.getString("asset_status"));
                 i.setDate(rs.getString("created_at"));
-
+                i.setAssetId(rs.getInt("asset_id"));
                 list.add(i);
             }
 
@@ -164,21 +165,22 @@ public class IssueDAO extends DBContext {
 
         String sql = """
             SELECT
-            mr.request_id,
-            ms.status_name,
-            mr.description,
-            r.room_code,
-            a.asset_name,
-            u.full_name,
-            s.status_name AS asset_status,
-            mr.created_at
-            FROM maintenance_requests mr
-            JOIN maintenance_status ms ON mr.status_id = ms.status_id
-            JOIN assets a ON mr.asset_id = a.asset_id
-            JOIN rooms r ON a.room_id = r.room_id
-            JOIN users u ON mr.reported_by = u.user_id
-            JOIN asset_status s ON a.status_id = s.status_id
-            WHERE mr.request_id = ?
+                        mr.request_id,
+                        ms.status_name,
+                        mr.description,
+                        r.room_code,
+                        a.asset_name,
+            		a.asset_id,
+                        u.full_name,
+                        s.status_name AS asset_status,
+                        mr.created_at
+                        FROM maintenance_requests mr
+                        JOIN maintenance_status ms ON mr.status_id = ms.status_id
+                        JOIN assets a ON mr.asset_id = a.asset_id
+                        JOIN rooms r ON a.room_id = r.room_id
+                        JOIN users u ON mr.reported_by = u.user_id
+                        JOIN asset_status s ON a.status_id = s.status_id
+                        WHERE mr.request_id = ?
         """;
 
         try {
@@ -196,6 +198,7 @@ public class IssueDAO extends DBContext {
                 i.setIssueStatus(rs.getString("status_name"));
                 i.setRoomCode(rs.getString("room_code"));
                 i.setAssetName(rs.getString("asset_name"));
+                i.setAssetId(rs.getInt("asset_id"));
                 i.setReportedBy(rs.getString("full_name"));
                 i.setStatus(rs.getString("asset_status"));
                 i.setDate(rs.getString("created_at"));

@@ -26,10 +26,8 @@ public class IssueController extends HttpServlet {
 
             // ================= LIST =================
             case "list":
-
                 List<Issue> list = dao.getAllIssues();
                 request.setAttribute("issues", list);
-
                 request.getRequestDispatcher(
                         "views_issue_report/IssueReportManagement.jsp")
                         .forward(request, response);
@@ -37,43 +35,29 @@ public class IssueController extends HttpServlet {
 
             // ================= DETAIL =================
             case "detail":
-
                 try {
-
                     int id = Integer.parseInt(request.getParameter("id"));
-
                     Issue issue = dao.getIssueById(id);
-
                     if (issue != null) {
-
                         request.setAttribute("issue", issue);
-
                         request.getRequestDispatcher(
                                 "views_issue_report/DetailIssue.jsp")
                                 .forward(request, response);
-
                     } else {
-
                         response.sendRedirect("Issue?action=list");
                     }
 
                 } catch (Exception e) {
-
                     response.sendRedirect("Issue?action=list");
                 }
-
                 break;
 
             // ================= FILTER =================
             case "filter":
-
                 String date = request.getParameter("date");
                 String status = request.getParameter("status");
-
                 List<Issue> issues = dao.filter(date, status);
-
                 request.setAttribute("issues", issues);
-
                 request.getRequestDispatcher(
                         "views_issue_report/IssueReportManagement.jsp")
                         .forward(request, response);
