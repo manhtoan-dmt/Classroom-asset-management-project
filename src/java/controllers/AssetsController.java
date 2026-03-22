@@ -18,6 +18,7 @@ import dal.RoomDAO;
 import model.Asset;
 import model.AssetDetail;
 import model.AssetEdit;
+import model.AssetType;
 import model.Room;
 import model.AssetWithRoom;
 import model.MaintenanceHistory;
@@ -71,51 +72,35 @@ public class AssetsController extends HttpServlet {
         String action = request.getParameter("action");
         int assetId = 0;
         AssetDAO dao = new AssetDAO();
-
         if (action == null) {
-
             List<AssetTypeStatistic> list = dao.getAssetStatistics();
-
             request.setAttribute("assetStats", list);
-
             request.getRequestDispatcher("views_asset_management/AssetManagement.jsp")
                     .forward(request, response);
         } else if (action.equals("create")) {
-
             request.setAttribute("categories", dao.getAllCategories());
             request.setAttribute("statuses", dao.getAllStatus());
             RoomDAO rdao = new RoomDAO();
 //            request.setAttribute("rooms", rdao.getAllRoomsType());
-
             request.getRequestDispatcher("views_asset_management/CreateNewProduct.jsp")
                     .forward(request, response);
-
         } else if (action.equals("add")) {
-
             List<Asset> storageAssets = dao.getAssetsInStorage();
             RoomDAO rdao = new RoomDAO();
-
             request.setAttribute("storageAssets", storageAssets);
             request.setAttribute("rooms", rdao.getAllRoomsType());
-
             request.getRequestDispatcher("views_asset_management/AddAsset.jsp")
                     .forward(request, response);
         } else if (action.equals("view")) {
-
             String roomId = request.getParameter("roomId");
             String categoryId = request.getParameter("categoryId");
-
             RoomDAO rdao = new RoomDAO();
-
             List<AssetWithRoom> assets = dao.getAssetsByFilter(roomId, categoryId);
             StatisticAsset stats = dao.getAssetStatusStats(roomId, categoryId);
-
             request.setAttribute("assets", assets);
             request.setAttribute("stats", stats);
-
             request.setAttribute("rooms", rdao.getRoomsWithCode());
             request.setAttribute("assetTypes", dao.getAllCategories());
-
             request.setAttribute("selectedRoomId", roomId);
             request.setAttribute("selectedCategoryId", categoryId);
 
@@ -134,9 +119,7 @@ public class AssetsController extends HttpServlet {
             request.getRequestDispatcher("views_asset_management/EditAsset.jsp")
                     .forward(request, response);
         } else if (action.equals("delete")) {
-
             String idRaw = request.getParameter("assetId");
-
             assetId = 0;
             try {
                 assetId = Integer.parseInt(idRaw.trim());
@@ -144,40 +127,40 @@ public class AssetsController extends HttpServlet {
                 response.sendRedirect("Assets?action=view");
                 return;
             }
-
             // Check không cho xóa nếu đang In Use hoặc Maintenance
             if (dao.isInUseOrMaintenance(assetId)) {
                 response.sendRedirect("Assets?action=view&error=CannotDelete");
                 return;
             }
-
             dao.deleteAsset(assetId);
-
             response.sendRedirect("Assets?action=view");
         } else if (action.equals("detail")) {
-
             String idRaw = request.getParameter("assetId");
+            assetId = Integer.parseInt(idRaw.trim());
 
-            assetId = 0;
-            try {
-                assetId = Integer.parseInt(idRaw.trim());
-            } catch (Exception e) {
-                response.sendRedirect("Assets?action=view");
-                return;
-            }
-
-            
             AssetDetail asset = dao.getAssetDetail(assetId);
-            if(asset == null) {
+            if (asset == null) {
                 response.sendRedirect("Assets?action=view");
                 return;
             }
             List<MaintenanceHistory> list = dao.getMaintenanceHistory(assetId);
-
             request.setAttribute("asset", asset);
             request.setAttribute("maintenanceList", list);
-
             request.getRequestDispatcher("/views_asset_management/ViewDetailAsset.jsp")
+                    .forward(request, response);
+
+        } else if (action.equals("assetType")) {
+            List<AssetType> lAssetType = dao.getAssetTypes();
+            request.setAttribute("lAssetType", lAssetType);
+            request.getRequestDispatcher("/views_asset_management/AssetTypeMenegement.jsp")
+                    .forward(request, response);
+        } else if (action.equals("deleteAssetType")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            dao.deleteAssetType(id);
+            
+            List<AssetType> lAssetType = dao.getAssetTypes();
+            request.setAttribute("lAssetType", lAssetType);
+            request.getRequestDispatcher("/views_asset_management/AssetTypeMenegement.jsp")
                     .forward(request, response);
         }
     }
@@ -193,7 +176,15 @@ public class AssetsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        AssetDAO dao = new AssetDAO();
+        if(action.equals("createAssetType")) {
+            String nameType = request.getParameter("categoryName");
+            dao.createTypeAsset(nameType);
+            List<AssetType> lAssetType = dao.getAssetTypes();
+            request.setAttribute("lAssetType", lAssetType);
+            request.getRequestDispatcher("/views_asset_management/AssetTypeMenegement.jsp").forward(request, response);
+        }
     }
 
     /**

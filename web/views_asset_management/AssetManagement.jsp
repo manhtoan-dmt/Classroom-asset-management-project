@@ -42,9 +42,8 @@
             </a>
 
 
-            <!--            cai nay admin co thoi, dung thi xoa di-->
-
-            <a href="AssetType"
+         
+            <a href="Assets?action=assetType"
                class="btn btn-warning">
                 Asset Type Management
             </a>
@@ -125,6 +124,6 @@
 
 </body>
 </html>
-====
+
 
     

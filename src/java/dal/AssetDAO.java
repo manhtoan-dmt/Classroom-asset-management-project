@@ -15,6 +15,7 @@ import model.StatisticAsset;
 import model.AssetWithRoom;
 import java.time.LocalDate;
 import model.AssetDetail;
+import model.AssetType;
 import model.MaintenanceHistory;
 
 public class AssetDAO extends DBContext {
@@ -103,6 +104,22 @@ public class AssetDAO extends DBContext {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void UpdateAsset(AssetDetail editAcc) {
+        try {
+            String sql = """
+                         update assets set supplier = ?, price = ? where asset_code = ?
+                        """;
+            st = connection.prepareStatement(sql);
+            //truyen tham so cho cau lenh sql
+            st.setString(1, editAcc.getSupplier());
+            st.setInt(2, editAcc.getPrice());
+            st.setString(3, editAcc.getAssetCode());
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
         }
     }
 
@@ -550,9 +567,9 @@ public class AssetDAO extends DBContext {
     }
 
     public AssetDetail getAssetDetail(int assetId) {
-    AssetDetail a = null;
-    try {
-        String sql = """
+        AssetDetail a = null;
+        try {
+            String sql = """
             SELECT 
                 a.asset_id,
                 a.asset_code,
@@ -570,32 +587,32 @@ public class AssetDAO extends DBContext {
             WHERE a.asset_id = ?
         """;
 
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.setInt(1, assetId);
-        ResultSet rs = st.executeQuery();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, assetId);
+            ResultSet rs = st.executeQuery();
 
-        if (rs.next()) {
-            a = new AssetDetail();
-            a.setAssetId(rs.getInt("asset_id"));
-            a.setAssetCode(rs.getString("asset_code"));
-            a.setAssetName(rs.getString("asset_name"));
-            a.setRoomName(rs.getString("room_code"));
-            a.setCategoryName(rs.getString("category_name"));
-            a.setStatusName(rs.getString("status_name"));
+            if (rs.next()) {
+                a = new AssetDetail();
+                a.setAssetId(rs.getInt("asset_id"));
+                a.setAssetCode(rs.getString("asset_code"));
+                a.setAssetName(rs.getString("asset_name"));
+                a.setRoomName(rs.getString("room_code"));
+                a.setCategoryName(rs.getString("category_name"));
+                a.setStatusName(rs.getString("status_name"));
 
-            if (rs.getDate("purchase_date") != null) {
-                a.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
+                if (rs.getDate("purchase_date") != null) {
+                    a.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
+                }
+
+                a.setSupplier(rs.getString("supplier"));
+                a.setPrice(rs.getInt("price"));
             }
 
-            a.setSupplier(rs.getString("supplier"));
-            a.setPrice(rs.getInt("price"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
+        return a;
     }
-    return a;
-}
 
     public List<MaintenanceHistory> getMaintenanceHistory(int assetId) {
         List<MaintenanceHistory> list = new ArrayList<>();
@@ -639,6 +656,53 @@ public class AssetDAO extends DBContext {
         }
 
         return list;
+    }
+
+    public List<AssetType> getAssetTypes() {
+        List<AssetType> accs = new ArrayList<>();
+        try {
+            String sql = "select * from asset_categories";
+            st = connection.prepareStatement(sql);
+            //truyentham so cho cau lenh
+            rs = st.executeQuery(); //read - select
+            while (rs.next()) {
+                int typeId = rs.getInt("category_id");
+                String typeName = rs.getString("category_name");
+                System.out.println(typeId);
+                System.out.println(typeName);
+                AssetType acc = new AssetType(typeId, typeName);
+                accs.add(acc);
+            }
+            return accs;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void deleteAssetType(int id) {
+        String sql = "DELETE FROM asset_categories WHERE category_id = ?";
+        try {
+            st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+    
+    public void createTypeAsset(String newAcc) {
+        try {
+            String sql = """
+                         INSERT INTO asset_categories (category_name)
+                         VALUES (?)
+                         """;
+            st = connection.prepareStatement(sql);
+            //truyen tham so cho cau lenh sql
+            st.setString(1, newAcc);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
     }
 
 }

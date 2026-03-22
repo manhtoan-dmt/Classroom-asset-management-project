@@ -120,7 +120,16 @@
                                                     <label class="form-label">Purchase Date</label>
                                                     <input type="date" class="form-control" name="purchaseDate">
                                                 </div>
-
+                                                
+                                                <div class="mb-3">
+                                                    <label class="form-label">Supplier</label>
+                                                    <input type="text" class="form-control" name="Supplier">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label class="form-label">Price</label>
+                                                    <input type="text" class="form-control" name="Price">
+                                                </div>
 
                                                 <!-- STATUS -->
                                                 <div class="mb-3">

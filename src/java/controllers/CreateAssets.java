@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import model.Asset;
+import model.AssetDetail;
 
 /**
  *
@@ -129,6 +130,22 @@ public class CreateAssets extends HttpServlet {
         a.setStatusId(statusId);
 
         dao.createAsset(a);
+
+        String supplier = request.getParameter("Supplier");
+        int price = 0;
+        try {
+            price = Integer.parseInt(request.getParameter("Price"));
+
+        } catch (Exception e) {
+            price = 0;
+        }
+
+        AssetDetail asd = new AssetDetail();
+        asd.setAssetId(0);
+        asd.setAssetCode(code);
+        asd.setSupplier(supplier);
+        asd.setPrice(price);
+        dao.UpdateAsset(asd);
 
         response.sendRedirect("Assets");
     }

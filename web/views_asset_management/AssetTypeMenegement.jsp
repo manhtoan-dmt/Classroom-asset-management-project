@@ -57,7 +57,8 @@
 
                                 <div class="card-body">
 
-                                    <form action="createAssetType" method="post">
+                                    <form action="Assets" method="post">
+                                        <input type="hidden" name="action" value="createAssetType">
 
                                         <div class="row">
 
@@ -102,17 +103,17 @@
 
                                 <tbody>
 
-                                    <c:forEach var="c" items="${categories}">
+                                    <c:forEach var="c" items="${lAssetType}">
 
                                         <tr>
 
-                                            <td>${c.categoryId}</td>
+                                            <td>${c.assetTypeId}</td>
 
-                                            <td>${c.categoryName}</td>
+                                            <td>${c.assetTypeName}</td>
 
                                             <td>
 
-                                                <a href="deleteAssetType?id=${c.categoryId}"
+                                                <a href="Assets?action=deleteAssetType&id=${c.assetTypeId}"
                                                    class="btn btn-danger btn-sm"
                                                    onclick="return confirm('Delete this asset type?')">
 

@@ -107,44 +107,6 @@
                         </table>
 
 
-
-                        <!-- ROOM SCHEDULE -->
-
-                        <h4>Room Schedule Today</h4>
-
-                        <table class="table table-striped table-hover table-bordered">
-
-                            <thead class="table-warning">
-
-                                <tr>
-                                    <th>Time</th>
-                                    <th>User</th>
-                                    <th>Purpose</th>
-                                    <th>Status</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <c:forEach var="b" items="${bookings}">
-
-                                    <tr>
-
-                                        <td>${b.startTime} - ${b.endTime}</td>
-                                        <td>${b.userName}</td>
-                                        <td>${b.purpose}</td>
-                                        <td>${b.status}</td>
-
-                                    </tr>
-
-                                </c:forEach>
-
-                            </tbody>
-
-                        </table>
-
-
                         <a href="Room" class="btn btn-secondary mt-3">Back</a>
 
                     </div>
