@@ -118,5 +118,29 @@ public List<Asset> getAllAssets() {
         return false;
     }
 }
-}
 
+      public List<Asset> getAssetsByRoomId(int roomId) {
+    List<Asset> list = new ArrayList<>();
+    String sql = "SELECT * FROM assets WHERE room_id = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, roomId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            list.add(new Asset(
+                rs.getInt("asset_id"),
+                rs.getString("asset_code"),
+                rs.getString("asset_name"),
+                rs.getInt("category_id"),
+                rs.getInt("room_id"),
+                rs.getString("serial_number"),
+                rs.getDate("purchase_date") != null ? rs.getDate("purchase_date").toLocalDate() : null,
+                rs.getInt("status_id")
+            ));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+}

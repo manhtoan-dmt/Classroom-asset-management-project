@@ -36,7 +36,7 @@
                     <c:if test="${not empty successMsg}">
                         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
                             <i class="bi bi-check-circle-fill me-2"></i>
-                            <strong>Thành công!</strong> ${successMsg}
+                            <strong>Success!</strong> ${successMsg}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     </c:if>
@@ -44,7 +44,7 @@
                     <c:if test="${not empty errorMsg}">
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <strong>Lỗi!</strong> ${errorMsg}
+                            <strong>Error!</strong> ${errorMsg}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     </c:if>
