@@ -21,7 +21,8 @@
             <div class="row">
 
                 <div class="col-md-2 p-0">
-                    <jsp:include page="/views/topnav.jsp"/>
+                    
+                    <jsp:include page="/views_student_teacher/topnav.jsp"/>
                 </div>
 
                 <div class="col-md-10 content">
