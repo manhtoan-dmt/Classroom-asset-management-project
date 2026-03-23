@@ -11,9 +11,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
         
         <style>
-            /* Đảm bảo Sidebar và Content cao bằng nhau và lấp đầy màn hình */
             .main-wrapper {
-                min-height: calc(100vh - 120px); /* Trừ đi chiều cao của header/footer ước tính */
+                min-height: calc(100vh - 120px); 
             }
             .sidebar-area {
                 background-color: #f8f9fa;
@@ -22,7 +21,6 @@
             .content-area {
                 padding: 20px;
             }
-            /* Căn giữa dọc cho các ô trong bảng */
             .table td, .table th {
                 vertical-align: middle;
             }

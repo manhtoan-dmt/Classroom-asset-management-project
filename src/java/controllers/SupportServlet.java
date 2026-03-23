@@ -33,7 +33,6 @@ public class SupportServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        // THỐNG NHẤT: Dùng "account" (hoặc "user") tùy theo lúc bạn Login bạn set tên gì
         User user = (User) session.getAttribute("account"); 
 
         if (user == null) {
@@ -43,19 +42,15 @@ public class SupportServlet extends HttpServlet {
 
         SupportDAO dao = new SupportDAO();
 
-        // 1. Lấy dữ liệu cho các ô Select trên Form (Phòng và Thiết bị)
         List<Room> roomList = dao.getAllRooms();
         List<Asset> assetList = dao.getAllAssets();
         
-        // 2. Lấy lịch sử báo cáo của chính User đó (Dòng này cực kỳ quan trọng)
         List<MaintenanceRequestView> history = dao.getRequestHistory(user.getUserId());
 
-        // 3. Đẩy toàn bộ dữ liệu sang JSP
         request.setAttribute("roomList", roomList);
         request.setAttribute("assetList", assetList);
-        request.setAttribute("requestHistory", history); // Tên này phải khớp với c:forEach bên JSP
+        request.setAttribute("requestHistory", history); 
 
-        // 4. Mở trang JSP (Kiểm tra kỹ đường dẫn này)
         request.getRequestDispatcher("/views_student_teacher/support.jsp").forward(request, response);
     }
 
@@ -65,7 +60,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     HttpSession session = request.getSession();
     User user = (User) session.getAttribute("account");
 
-    // 1. Chống lỗi NullPointerException nếu Session hết hạn
     if (user == null) {
         request.setAttribute("errorMsg", "Phiên đăng nhập hết hạn, vui lòng login lại!");
         request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -73,17 +67,14 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     }
 
     try {
-        // 2. Lấy dữ liệu từ Form (roomId và assetId giờ đều là int)
         int roomId = Integer.parseInt(request.getParameter("roomId"));
         int assetId = Integer.parseInt(request.getParameter("assetId"));
         String description = request.getParameter("description");
         int userId = user.getUserId();
 
-        // 3. Gọi DAO xử lý
         SupportDAO dao = new SupportDAO();
         boolean isSuccess = dao.insertRequest(roomId, assetId, userId, description);
 
-        // 4. Thiết lập thông báo Alert
         if (isSuccess) {
             request.setAttribute("successMsg", "Gửi yêu cầu hỗ trợ thành công!");
         } else {
@@ -94,7 +85,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         request.setAttribute("errorMsg", "Lỗi nhập liệu: " + e.getMessage());
     }
 
-    // 5. Quay về doGet để load lại danh sách lịch sử mới nhất
     doGet(request, response);
 }
 }

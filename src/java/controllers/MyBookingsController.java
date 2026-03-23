@@ -22,12 +22,10 @@ public class MyBookingsController extends HttpServlet {
 
         switch (action) {
 
-            // ✅ LOAD MY BOOKINGS
             case "list":
                 loadMyBookings(request, response);
                 break;
 
-            // ✅ CANCEL BOOKING
             case "cancel":
                 cancelBooking(request, response);
                 break;
@@ -38,9 +36,6 @@ public class MyBookingsController extends HttpServlet {
         }
     }
 
-    // ================================
-    // LOAD BOOKINGS CỦA USER
-    // ================================
     private void loadMyBookings(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,9 +60,6 @@ public class MyBookingsController extends HttpServlet {
                 .forward(request, response);
     }
 
-    // ================================
-    // CANCEL BOOKING
-    // ================================
     private void cancelBooking(HttpServletRequest request,
             HttpServletResponse response)
             throws IOException {
@@ -87,7 +79,6 @@ public class MyBookingsController extends HttpServlet {
         BookingDAO dao = new BookingDAO();
         dao.cancelBooking(bookingId, userId);
 
-        // 👉 quay lại trang My Bookings
         response.sendRedirect("mybooking?action=list");
     }
 }

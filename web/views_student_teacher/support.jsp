@@ -12,68 +12,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
         <style>
-            .main-wrapper {
-                min-height: calc(100vh - 120px);
-            }
-            .sidebar-area {
-                background-color: #f8f9fa;
-                border-right: 1px solid #dee2e6;
-            }
-            .content-area {
-                padding: 25px;
-            }
-            .card-header.bg-dark {
-                letter-spacing: 1px;
-            }
-            .table-v-middle td {
-                vertical-align: middle;
-            }
-            .alert {
-                border-radius: 8px;
-                margin-bottom: 20px;
-            }
+            .main-wrapper { min-height: calc(100vh - 120px); }
+            .sidebar-area { background-color: #f8f9fa; border-right: 1px solid #dee2e6; }
+            .content-area { padding: 25px; }
+            .card-header.bg-dark { letter-spacing: 1px; }
+            .table-v-middle td { vertical-align: middle; }
+            .alert { border-radius: 8px; margin-bottom: 20px; }
         </style>
-
-        <script>
-    // Hàm 1: Lọc danh sách thiết bị theo phòng
-    function onRoomChange() {
-        const selectedRoomId = document.getElementById("roomSelect").value;
-        const assetSelect = document.getElementById("assetSelect");
-        const options = assetSelect.querySelectorAll(".asset-option");
-
-        // Reset lại ô Asset và ô Code hiển thị
-        assetSelect.value = "";
-        document.getElementById("assetCodeDisplay").innerText = "---";
-
-        options.forEach(opt => {
-            const roomOfAsset = opt.getAttribute("data-room");
-            // Hiển thị option nếu thuộc phòng đã chọn, ngược lại thì ẩn
-            if (roomOfAsset === selectedRoomId || selectedRoomId === "") {
-                opt.style.display = "block";
-                opt.disabled = false;
-            } else {
-                opt.style.display = "none";
-                opt.disabled = true; 
-            }
-        });
-    }
-
-    // Hàm 2: Cập nhật Asset Code khi chọn thiết bị (CÁI BẠN ĐANG THIẾU)
-    function onAssetChange() {
-        const assetSelect = document.getElementById("assetSelect");
-        const selectedOption = assetSelect.options[assetSelect.selectedIndex];
-        
-        // Lấy mã code từ attribute data-code đã set ở c:forEach
-        const assetCode = selectedOption.getAttribute("data-code");
-        
-        const displayDiv = document.getElementById("assetCodeDisplay");
-        if (assetCode) {
-            displayDiv.innerText = assetCode;
-        } else {
-            displayDiv.innerText = "---";
-        }
-    }
-</script>
     </head>
     <body>
 
@@ -88,12 +33,11 @@
 
                 <div class="col-md-10 content-area">
 
-                    <%-- HIỂN THỊ THÔNG BÁO TẠI ĐÂY --%>
                     <c:if test="${not empty successMsg}">
                         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
                             <i class="bi bi-check-circle-fill me-2"></i>
                             <strong>Thành công!</strong> ${successMsg}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     </c:if>
 
@@ -101,57 +45,71 @@
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i>
                             <strong>Lỗi!</strong> ${errorMsg}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     </c:if>
-                    <%-- KẾT THÚC THÔNG BÁO --%>
 
                     <div class="card shadow-sm mb-5">
                         <div class="card-header bg-dark text-white p-3">
                             <h5 class="mb-0"><i class="bi bi-exclamation-octagon me-2"></i> REPORT ROOM ISSUE</h5>
                         </div>
                         <div class="card-body p-4">
+                            
+                            <form action="support" method="get" class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Select Room:</label>
+                                    <select name="roomId" class="form-select" onchange="this.form.submit()" required>
+                                        <option value="">-- Choose Room --</option>
+                                        <c:forEach var="r" items="${roomList}">
+                                            <option value="${r.roomId}" ${r.roomId == selectedRoomId ? 'selected' : ''}>
+                                                ${r.roomCode}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-md-8 d-flex align-items-end">
+                                    <small class="text-muted mb-2"></small>
+                                </div>
+                            </form>
+
+                            <hr>
+
+                    
                             <form action="${pageContext.request.contextPath}/support" method="post">
+                                <%-- Giữ roomId đã chọn từ bước trước --%>
+                                <input type="hidden" name="roomId" value="${selectedRoomId}">
+
                                 <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Select Room:</label>
-                                        <select name="roomId" id="roomSelect" class="form-select" onchange="onRoomChange()" required>
-                                            <option value="">-- Choose Room --</option>
-                                            <c:forEach var="r" items="${roomList}">
-                                                <option value="${r.roomId}">${r.roomCode}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label class="form-label fw-bold">Asset Type:</label>
-                                        <select name="assetId" id="assetSelect" class="form-select" onchange="onAssetChange()" required>
-                                            <option value="" data-code="">-- Choose Asset --</option>
+                                        <select name="assetId" class="form-select" required ${empty assetList ? 'disabled' : ''}>
+                                            <option value="">-- Choose Asset --</option>
                                             <c:forEach var="a" items="${assetList}">
-                                                <option value="${a.assetId}" data-room="${a.roomId}" data-code="${a.assetCode}" class="asset-option">
-                                                    ${a.assetName}
+                                                <option value="${a.assetId}">
+                                                    ${a.assetName} [${a.assetCode}]
                                                 </option>
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Asset Code:</label>
-                                        <div id="assetCodeDisplay" class="form-control bg-light fw-bold text-primary">---</div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Description of Issue:</label>
+                                        <textarea name="description" class="form-control" rows="2" 
+                                                  placeholder="E.g. Projector not working..." required></textarea>
                                     </div>
                                 </div>
 
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">Description of Issue:</label>
-                                    <textarea name="description" class="form-control" rows="3" placeholder="Describe the problem (e.g. Projector blue screen, broken chair...)" required></textarea>
-                                </div>
-
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="roomuser" class="btn btn-outline-secondary px-4">Back</a>
-                                    <button type="submit" class="btn btn-dark px-5 fw-bold">Submit Report</button>
+                                    
+                                    <button type="submit" class="btn btn-dark px-5 fw-bold" ${empty assetList ? 'disabled' : ''}>
+                                        Submit Report
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
 
+                   
                     <div class="card shadow-sm">
                         <div class="card-header bg-secondary text-white">
                             <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i> My Reporting History</h6>
@@ -191,7 +149,7 @@
                                     </c:forEach>
                                     <c:if test="${empty requestHistory}">
                                         <tr>
-                                            <td colspan="6" class="text-center py-4 text-muted">No reports found.</td>
+                                            <td colspan="5" class="text-center py-4 text-muted">No reports found.</td>
                                         </tr>
                                     </c:if>
                                 </tbody>

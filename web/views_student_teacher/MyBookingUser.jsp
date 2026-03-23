@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
         
         <style>
-            /* Đồng bộ layout hệ thống */
             .main-wrapper {
                 min-height: calc(100vh - 120px); 
             }
@@ -22,7 +21,6 @@
             .content-area {
                 padding: 25px;
             }
-            /* Căn giữa nội dung bảng */
             .table td, .table th {
                 vertical-align: middle;
             }

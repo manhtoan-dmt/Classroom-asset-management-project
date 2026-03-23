@@ -64,7 +64,6 @@ public class BookingsUserController extends HttpServlet {
     if (roomIdRaw != null) {
         int roomId = Integer.parseInt(roomIdRaw);
 
-        // chỉ lấy 1 phòng
         request.setAttribute("room", new dal.RoomDAO().getRoomById(roomId));
     }
 System.out.println("roomId = " + roomIdRaw);
@@ -112,7 +111,6 @@ System.out.println("roomId = " + roomIdRaw);
 
     BookingDAO dao = new BookingDAO();
 
-    // 🔥 CHECK CHỈ APPROVED
     boolean isConflict = dao.isRoomBookedApproved(roomId, startTime, endTime);
 
     if (isConflict) {
@@ -125,7 +123,6 @@ System.out.println("roomId = " + roomIdRaw);
         return;
     }
 
-    // ✅ KHÔNG TRÙNG → TẠO
     dao.createBooking(roomId, userId, startTime, endTime, purpose);
 
     response.sendRedirect("roomuser");

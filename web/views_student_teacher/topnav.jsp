@@ -3,7 +3,7 @@
     <a href="${pageContext.request.contextPath}/Home">Home</a>
     <a href="${pageContext.request.contextPath}/roomuser">Room Management</a>
     <a href="${pageContext.request.contextPath}/support">Support</a>
-    <a href="${pageContext.request.contextPath}/Profile">Profile</a>
+    <a href="${pageContext.request.contextPath}/profile">Profile</a>
     <a href="logout">Logout</a>
 
 </div>

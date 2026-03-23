@@ -20,19 +20,16 @@
 
             <div class="row">
 
-                <!-- SIDEBAR -->
                 <div class="col-md-2 p-0">
                     <jsp:include page="/views/topnav.jsp"/>
                 </div>
 
-                <!-- CONTENT -->
                 <div class="col-md-10 content">
 
                     <div class="container mt-4">
 
                         <h2>Room Detail</h2>
 
-                        <!-- ROOM INFO -->
 
                         <div class="card mb-4">
 
@@ -56,7 +53,6 @@
 
 
 
-                        <!-- ASSET LIST -->
 
                         <h4>Assets in this Room</h4>
 

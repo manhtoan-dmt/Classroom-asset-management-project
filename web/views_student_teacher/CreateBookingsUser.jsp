@@ -13,7 +13,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #f4f7f6;
         }
-        /* Căn giữa card vào chính giữa màn hình */
         .booking-container {
             max-width: 600px;
             margin: 50px auto;
@@ -56,7 +55,6 @@
             margin-top: 15px;
             border-radius: 8px;
         }
-        /* Hiệu ứng bo góc cho mảng input readonly */
         .readonly-input {
             background-color: #f9f9f9 !important;
             font-weight: bold;

@@ -113,10 +113,8 @@ public class HomeController extends HttpServlet {
             List<BookView> list = bookingDAO.getBookingByUser(user.getUserId());
             request.setAttribute("booking", list);
             
-//            List<BookingInfo> bookings = bookingDAO.getBookingsByUser(user.getUserId());
             StatisticRoom stats = roomDAO.getStatistic();
 
-//            request.setAttribute("bookings", bookings);
             request.setAttribute("stats", stats);
             request.setAttribute("totalRooms", roomDAO.countTotalRooms());
             request.setAttribute("reservedRooms", stats.getOccupied());
@@ -129,10 +127,8 @@ public class HomeController extends HttpServlet {
             List<BookView> list = bookingDAO.getBookingByUser(user.getUserId());
             request.setAttribute("booking", list);
             
-//            List<BookingInfo> bookings = bookingDAO.getBookingsByUser(user.getUserId());
             StatisticRoom stats = roomDAO.getStatistic();
 
-//            request.setAttribute("bookings", bookings);
             request.setAttribute("stats", stats);
             request.setAttribute("totalRooms", roomDAO.countTotalRooms());
             request.setAttribute("reservedRooms", stats.getOccupied());
