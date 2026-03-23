@@ -21,10 +21,6 @@
         <servlet-class>controllers.AssetsController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BookRoomController</servlet-name>
-        <servlet-class>controllers.BookRoomController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>IssueController</servlet-name>
         <servlet-class>controllers.IssueController</servlet-class>
     </servlet>
@@ -99,10 +95,6 @@
     <servlet-mapping>
         <servlet-name>AssetsController</servlet-name>
         <url-pattern>/Assets</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BookRoomController</servlet-name>
-        <url-pattern>/BookRoom</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>IssueController</servlet-name>

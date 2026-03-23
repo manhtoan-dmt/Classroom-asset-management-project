@@ -31,9 +31,7 @@
                     <div class="container mt-4">
 
                         <h2>Edit Room</h2>
-
                         <form action="Room" method="post">
-
                             <input type="hidden" name="action" value="update">
                             <input type="hidden" name="id" value="${room.roomId}">
 
@@ -41,76 +39,56 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Room Name</label>
-
                                 <input type="text"
                                        name="roomCode"
                                        value="${room.roomCode}"
                                        class="form-control"
                                        required>
-
                                 <c:if test="${not empty errorName}">
                                     <div class="text-danger">
                                         ${errorName}
                                     </div>
                                 </c:if>
-
                             </div>
 
 
                             <!-- ROOM TYPE -->
-
                             <div class="mb-3">
                                 <label class="form-label">Room Type</label>
-
                                 <select name="typeId" class="form-control">
-
                                     <c:forEach var="t" items="${types}">
-
                                         <option value="${t.typeId}"
                                                 <c:if test="${t.typeId == room.typeId}">selected</c:if>>
                                             ${t.typeName}
                                         </option>
-
                                     </c:forEach>
-
                                 </select>
-
                             </div>
 
 
                             <!-- CAPACITY -->
-
                             <div class="mb-3">
                                 <label class="form-label">Capacity</label>
-
                                 <input type="number"
                                        name="capacity"
                                        value="${room.capacity}"
                                        class="form-control"
                                        min="1"
                                        required>
-
                             </div>
 
 
                             <!-- STATUS -->
-
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
-
                                 <select name="statusId" class="form-control">
-
                                     <c:forEach var="s" items="${statuses}">
-
                                         <option value="${s.statusId}"
                                                 <c:if test="${s.statusId == room.statusId}">selected</c:if>>
                                             ${s.statusName}
-                                        </option>
-
+                                        </option
                                     </c:forEach>
-
                                 </select>
-
                             </div>
 
 
@@ -118,20 +96,14 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Location</label>
-
                                 <select name="buildingId" class="form-control">
-
                                     <c:forEach var="l" items="${locations}">
-
                                         <option value="${l.buildingId }"
                                                 <c:if test="${l.buildingId  == room.buildingId}">selected</c:if>>
                                             ${l.buildingName}
                                         </option>
-
                                     </c:forEach>
-
                                 </select>
-
                             </div>
 
 
@@ -139,9 +111,7 @@
 
 
                             <button class="btn btn-primary">Update</button>
-
                             <a href="Room" class="btn btn-secondary">Cancel</a>
-
                         </form>
 
                     </div>

@@ -208,12 +208,12 @@ public class BookingDAO extends DBContext {
     """;
 
     try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, roomId);
-        ps.setTimestamp(2, start);
-        ps.setTimestamp(3, end);
+        st = connection.prepareStatement(sql);
+        st.setInt(1, roomId);
+        st.setTimestamp(2, start);
+        st.setTimestamp(3, end);
 
-        ResultSet rs = ps.executeQuery();
+        rs = st.executeQuery();
 
         if (rs.next()) {
             return rs.getInt(1) > 0;
@@ -225,6 +225,8 @@ public class BookingDAO extends DBContext {
 
     return false;
 }
+    
+    
      public List<BookingInfo> getBookingsByUser(int userId) {
 
         List<BookingInfo> list = new ArrayList<>();
@@ -241,10 +243,10 @@ public class BookingDAO extends DBContext {
         """;
 
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, userId);
+            st = connection.prepareStatement(sql);
+            st.setInt(1, userId);
 
-            ResultSet rs = ps.executeQuery();
+            rs = st.executeQuery();
 
             while (rs.next()) {
                 list.add(new BookingInfo(
@@ -278,9 +280,9 @@ public class BookingDAO extends DBContext {
     """;
 
     try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, userId);
-        ResultSet rs = ps.executeQuery();
+        st = connection.prepareStatement(sql);
+        st.setInt(1, userId);
+         rs = st.executeQuery();
 
         while (rs.next()) {
             BookView b = new BookView();
@@ -346,12 +348,12 @@ public class BookingDAO extends DBContext {
     """;
 
     try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, roomId);
-        ps.setInt(2, approvedId);
-        ps.setTimestamp(3, start);
-        ps.setTimestamp(4, end);
-        ps.executeUpdate();
+        st = connection.prepareStatement(sql);
+        st.setInt(1, roomId);
+        st.setInt(2, approvedId);
+        st.setTimestamp(3, start);
+        st.setTimestamp(4, end);
+        st.executeUpdate();
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -364,9 +366,9 @@ public class BookingDAO extends DBContext {
 
     // 2. reject các booking khác
     try {
-        PreparedStatement ps1 = connection.prepareStatement(sql1);
-        ps1.setInt(1, bookingId);
-        ps1.executeUpdate();
+         st = connection.prepareStatement(sql1);
+        st.setInt(1, bookingId);
+        st.executeUpdate();
 
        
         rejectOtherBookings(roomId, start, end, bookingId);

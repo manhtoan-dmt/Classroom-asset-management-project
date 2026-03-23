@@ -63,17 +63,18 @@ public class BookingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        BookingDAO bDAO = new BookingDAO();
 
         if (action == null) {
             action = "manage";
         }
+        
 
         switch (action) {
             case "detail":
                 int id = Integer.parseInt(request.getParameter("id"));
 
-                BookingDAO bookDAO = new BookingDAO();
-                BookingDetail b = bookDAO.getBookingDetailById(id);
+                BookingDetail b = bDAO.getBookingDetailById(id);
 
                 request.setAttribute("b", b);
 
@@ -91,8 +92,12 @@ public class BookingController extends HttpServlet {
 
                 break;
             case "updateStatus":
-                updateStatus(request, response);
+                int idd = Integer.parseInt(request.getParameter("id"));
+                int status = Integer.parseInt(request.getParameter("status"));
+                bDAO.updateStatus(idd, status);
+                response.sendRedirect("Book?action=detail&id=" + idd);
                 break;
+                
             default:
                 String date = request.getParameter("date");
 
@@ -100,30 +105,20 @@ public class BookingController extends HttpServlet {
                     date = LocalDate.now().toString();
                 }
                 try {
-                    BookingDAO dao = new BookingDAO();
-                    List<BookView> list = dao.getBookingsByDate(date);
+                    List<BookView> list = bDAO.getBookingsByDate(date);
                     request.setAttribute("bookings", list);
                     request.setAttribute("today", date);
                     request.getRequestDispatcher("views_booking_management/BookingManagement.jsp")
                             .forward(request, response);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    return;
                 }
                 break;
         }
     }
 
-    private void updateStatus(HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
 
-    int id = Integer.parseInt(request.getParameter("id"));
-    int status = Integer.parseInt(request.getParameter("status"));
 
-    BookingDAO dao = new BookingDAO();
-    dao.updateStatus(id, status);
-
-    response.sendRedirect("Book?action=detail&id=" + id);
-}
     /**
      * Handles the HTTP <code>POST</code> method.
      *

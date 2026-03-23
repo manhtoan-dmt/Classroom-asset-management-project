@@ -24,7 +24,6 @@ public class IssueController extends HttpServlet {
 
         switch (action) {
 
-            // ================= LIST =================
             case "list":
                 List<Issue> list = dao.getAllIssues();
                 request.setAttribute("issues", list);
@@ -33,7 +32,6 @@ public class IssueController extends HttpServlet {
                         .forward(request, response);
                 break;
 
-            // ================= DETAIL =================
             case "detail":
                 try {
                     int id = Integer.parseInt(request.getParameter("id"));
@@ -52,7 +50,6 @@ public class IssueController extends HttpServlet {
                 }
                 break;
 
-            // ================= FILTER =================
             case "filter":
                 String date = request.getParameter("date");
                 String status = request.getParameter("status");
@@ -75,20 +72,14 @@ public class IssueController extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        // ================= UPDATE STATUS =================
         if ("updateStatus".equals(action)) {
 
             try {
-
                 int issueId = Integer.parseInt(request.getParameter("issueId"));
-
                 String issueStatus = request.getParameter("issueStatus");
-
                 dao.updateIssue(issueId, issueStatus);
-
             } catch (Exception e) {
-
-                e.printStackTrace();
+                return;
             }
 
             response.sendRedirect("Issue?action=list");

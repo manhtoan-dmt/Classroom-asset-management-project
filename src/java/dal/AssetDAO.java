@@ -70,7 +70,7 @@ public class AssetDAO extends DBContext {
                 list.add(stat);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
         return list;
     }
@@ -103,7 +103,7 @@ public class AssetDAO extends DBContext {
             st.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
     }
 
@@ -151,7 +151,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return list;
@@ -187,7 +187,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return list;
@@ -211,7 +211,7 @@ public class AssetDAO extends DBContext {
             st.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
 
     }
@@ -240,7 +240,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return list;
@@ -269,7 +269,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return list;
@@ -291,7 +291,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
 
         return false; // chưa tồn tại
@@ -313,7 +313,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
 
         return false; // chưa tồn tại
@@ -375,7 +375,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+           return null;
         }
 
         return list;
@@ -425,7 +425,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return list;
@@ -468,7 +468,7 @@ public class AssetDAO extends DBContext {
                 stats.setMaintenance(rs.getInt("maintenance"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return stats;
@@ -504,7 +504,7 @@ public class AssetDAO extends DBContext {
                 return a;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
         return null;
     }
@@ -549,7 +549,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
         return false;
     }
@@ -609,7 +609,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
         return a;
     }
@@ -652,7 +652,7 @@ public class AssetDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
 
         return list;

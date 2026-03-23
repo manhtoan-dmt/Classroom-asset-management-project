@@ -121,20 +121,7 @@ public class HomeController extends HttpServlet {
 
             request.getRequestDispatcher("/views_student_teacher/home.jsp").forward(request, response);
         }
-         if (role == 3 || role == 4) {
-            BookingDAO bookingDAO = new BookingDAO();
-            RoomDAO roomDAO = new RoomDAO();
-            List<BookView> list = bookingDAO.getBookingByUser(user.getUserId());
-            request.setAttribute("booking", list);
-            
-            StatisticRoom stats = roomDAO.getStatistic();
-
-            request.setAttribute("stats", stats);
-            request.setAttribute("totalRooms", roomDAO.countTotalRooms());
-            request.setAttribute("reservedRooms", stats.getOccupied());
-
-            request.getRequestDispatcher("/views_student_teacher/home.jsp").forward(request, response);
-        }
+         
 
     }
 

@@ -18,7 +18,6 @@
         <jsp:include page="/views/header.jsp"/>
 
         <div class="container-fluid">
-
             <div class="row">
 
                 <!-- SIDEBAR -->
@@ -28,27 +27,19 @@
 
                 <!-- CONTENT -->
                 <div class="col-md-10 content">
-
                     <div class="bg-light">
-
                         <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
                             <div class="container-fluid">
                                 <span class="navbar-brand fw-bold">Classroom Management</span>
                             </div>
                         </nav>
-
                         <div class="container mt-5">
-
                             <div class="row justify-content-center">
-
                                 <div class="col-md-6">
-
                                     <div class="card shadow">
-
                                         <div class="card-header bg-warning text-white fw-bold">
                                             Add New Room
                                         </div>
-
                                         <div class="card-body">
 
                                             <form action="Room" method="post">

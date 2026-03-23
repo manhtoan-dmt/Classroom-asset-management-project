@@ -144,7 +144,7 @@ public class UserManagementController extends HttpServlet {
                 statusId = Integer.parseInt(request.getParameter("status"));
                 username = username.replaceAll("\\s+", "");
                 phone = phone.replaceAll("\\s+", "");
-                User u = new User(roleId, username, password, fullName, email, phone, roleId, statusId, LocalDateTime.MIN);
+                User u = new User(id, username, password, fullName, email, phone, roleId, statusId, LocalDateTime.MIN);
                 dao.updateUser(u);
                 response.sendRedirect("UserManagement");
                 return;

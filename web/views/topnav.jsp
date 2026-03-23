@@ -4,7 +4,7 @@
     <a href="${pageContext.request.contextPath}/Home">Home</a>
     <a href="${pageContext.request.contextPath}/Room">Room Management</a>
     <a href="${pageContext.request.contextPath}/Assets">Asset Management</a>
-    <a href="${pageContext.request.contextPath}/Book">Manage Book</a>
+    <a href="${pageContext.request.contextPath}/Book">Manage Booking</a>
     <a href="${pageContext.request.contextPath}/Issue">Issue Reports</a>
 
     <c:if test="${account.roleId == 1}">

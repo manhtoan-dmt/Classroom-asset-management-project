@@ -41,68 +41,47 @@
                             </div>
 
                             <div class="card-body">
-
                                 <p><b>Room ID:</b> ${room.roomID}</p>
                                 <p><b>Room Name:</b> ${room.name}</p>
                                 <p><b>Type:</b> ${room.type}</p>
                                 <p><b>Capacity:</b> ${room.capacity} people</p>
                                 <p><b>Location:</b> ${room.building}</p>
                                 <p><b>Status:</b> ${room.status}</p>
-
-
                             </div>
-
                         </div>
-
-
 
                         <!-- ASSET LIST -->
 
                         <h4>Assets in this Room</h4>
 
                         <table class="table table-bordered">
-
                             <thead class="table-warning">
-
                                 <tr>
                                     <th>Asset ID</th>
                                     <th>Asset Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
-
                             </thead>
 
                             <tbody>
-
                                 <c:forEach var="a" items="${assets}">
-
                                     <tr>
-
                                         <td>${a.assetId}</td>
                                         <td>${a.assetName}</td>
                                         <td>${a.statusName}</td>
-
                                         <td>
                                             <a href="Assets?action=detail&assetId=${a.assetId}"
                                                class="btn btn-primary btn-sm">View</a>
 
                                             <c:if test="${a.statusName eq 'Broken'}">
-
                                                 <a href="Issue?action=repair&id=${a.assetId}"
                                                    class="btn btn-warning btn-sm">Repair</a>
-                                                
-
-                                            </c:if>
-
+                                           </c:if>
                                         </td>
-
                                     </tr>
-
                                 </c:forEach>
-
                             </tbody>
-
                         </table>
 
 
