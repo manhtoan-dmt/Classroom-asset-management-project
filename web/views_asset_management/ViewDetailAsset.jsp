@@ -173,7 +173,7 @@
                             <!-- BACK BUTTON -->
 
                             <div class="mt-4">
-                                <a href="Asset" class="btn btn-secondary">Back</a>
+                                <a href="Assets" class="btn btn-secondary">Back</a>
                             </div>
 
 
