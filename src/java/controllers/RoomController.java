@@ -91,11 +91,9 @@ public class RoomController extends HttpServlet {
 
             RoomView room = roomD.getRoomByID(id);
             List<AssetView> assets = assetDAO.getAssetsByRoom(id);
-            List<BookingView> bookings = bookingDAO.getTodayBookingByRoom(id);
-
             request.setAttribute("room", room);
             request.setAttribute("assets", assets);
-            request.setAttribute("bookings", bookings);
+
 
             request.getRequestDispatcher("/views_room_management/ViewRoomManagement.jsp")
                     .forward(request, response);

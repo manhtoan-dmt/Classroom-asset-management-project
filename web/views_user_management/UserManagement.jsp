@@ -68,8 +68,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-
-                                        <a href="views_user_management/CreateNewUser.jsp"
+                                        <a href="UserManagement?action=create"
                                            class="btn btn-success w-100">
 
                                             Create New Account

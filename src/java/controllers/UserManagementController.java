@@ -92,6 +92,9 @@ public class UserManagementController extends HttpServlet {
                     dao.deleteUser(id2);
                     response.sendRedirect("UserManagement");
                     return;
+                case "create":
+                    request.getRequestDispatcher("/views_user_management/CreateNewUser.jsp").forward(request, response);
+                    return;
                 default:
                     String keyword = request.getParameter("keyword");
                     request.setAttribute("keyword", keyword);

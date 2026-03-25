@@ -58,7 +58,7 @@
                                 <select name="typeId" class="form-control">
                                     <c:forEach var="t" items="${types}">
                                         <option value="${t.typeId}"
-                                                <c:if test="${t.typeId == room.typeId}">selected</c:if>>
+                                                >
                                             ${t.typeName}
                                         </option>
                                     </c:forEach>
@@ -82,13 +82,17 @@
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
                                 <select name="statusId" class="form-control">
+                                    
                                     <c:forEach var="s" items="${statuses}">
                                         <option value="${s.statusId}"
                                                 <c:if test="${s.statusId == room.statusId}">selected</c:if>>
                                             ${s.statusName}
-                                        </option
+                                        </option>
                                     </c:forEach>
+                                    
                                 </select>
+                                    
+                                
                             </div>
 
 
@@ -101,9 +105,10 @@
                                         <option value="${l.buildingId }"
                                                 <c:if test="${l.buildingId  == room.buildingId}">selected</c:if>>
                                             ${l.buildingName}
-                                        </option>
+                                            </option>
                                     </c:forEach>
                                 </select>
+                                
                             </div>
 
 
